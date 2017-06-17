@@ -29,8 +29,8 @@ output$ui_View <- renderUI({
         tags$td(actionButton("view_store", "Store"), style="padding-top:30px;")
       )
     ),
-    # help_modal('View','view_help',inclMD(file.path(getOption("radiant.path.data"),"app/tools/help/view.md")) %>% gsub("`","",.))
-    help_and_report('View','view',inclMD(file.path(getOption("radiant.path.data"),"app/tools/help/view.md")) %>% gsub("`","",.))
+    # help_modal('View','view_help',inclMD(file.path(getOption("serenity.path.data"),"app/tools/help/view.md")) %>% gsub("`","",.))
+    help_and_report('View','view',inclMD(file.path(getOption("serenity.path.data"),"app/tools/help/view.md")) %>% gsub("`","",.))
   )
 })
 
@@ -65,17 +65,17 @@ output$dataviewer <- DT::renderDataTable({
   fbox <- if (nrow(dat) > 5e6) "none" else list(position = "top")
 
   isBigFct <- sapply(dat, function(x) is.factor(x) && length(levels(x)) > 1000)
-  if (sum(isBigFct) > 0) 
+  if (sum(isBigFct) > 0)
     dat[,isBigFct] <- select(dat, which(isBigFct)) %>% mutate_all(funs(as.character))
 
   withProgress(message = "Generating view table", value = 1,
-    DT::datatable(dat, 
-      filter = fbox, 
+    DT::datatable(dat,
+      filter = fbox,
       selection = "none",
-      rownames = FALSE, 
+      rownames = FALSE,
       # extension = "KeyTable",
       escape = FALSE,
-      style = "bootstrap", 
+      style = "bootstrap",
       options = list(
         stateSave = TRUE,   ## maintains state
         searchCols = lapply(r_state$dataviewer_search_columns, function(x) list(search = x)),

@@ -28,7 +28,7 @@ import_fs <- function(ns, libs = c(), incl = c(), excl = c()) {
   invisible()
 }
 
-import_fs("radiant.data", libs = "plotly", incl = "ggplotly")
+import_fs("serenity.data", libs = "plotly", incl = "ggplotly")
 
 init_data <- function() {
 
@@ -38,12 +38,12 @@ init_data <- function() {
   ## are changed."
   r_data <- reactiveValues()
 
-  df_name <- getOption("radiant.init.data", default = "diamonds")
+  df_name <- getOption("serenity.init.data", default = "diamonds")
   if (file.exists(df_name)) {
     df <- load(df_name) %>% get
     df_name <- basename(df_name) %>% {gsub(paste0(".",tools::file_ext(.)),"",., fixed = TRUE)}
   } else {
-    df <- data(list = df_name, package = "radiant.data", envir = environment()) %>% get
+    df <- data(list = df_name, package = "serenity.data", envir = environment()) %>% get
   }
 
   r_data[[df_name]] <- df
@@ -54,26 +54,26 @@ init_data <- function() {
 }
 
 ## import required functions and packages
-if (!"package:radiant.data" %in% search())
-  import_fs("radiant.data", libs = c("magrittr","ggplot2","lubridate","tidyr","dplyr","broom","tibble"))
+if (!"package:serenity.data" %in% search())
+  import_fs("serenity.data", libs = c("magrittr","ggplot2","lubridate","tidyr","dplyr","broom","tibble"))
 
 ## running local or on a server
 if (Sys.getenv('SHINY_PORT') == "") {
-  options(radiant.local = TRUE)
+  options(serenity.local = TRUE)
   ## no limit to filesize locally
   options(shiny.maxRequestSize = -1)
 } else {
-  options(radiant.local = FALSE)
+  options(serenity.local = FALSE)
   ## limit upload filesize on server (10MB)
   options(shiny.maxRequestSize = 10 * 1024^2)
 }
 
 ## encoding
-options(radiant.encoding = "UTF-8")
+options(serenity.encoding = "UTF-8")
 
 ## path to use for local or server use
-ifelse (grepl("radiant.data", getwd()) && file.exists("../../inst") , "..", system.file(package = "radiant.data")) %>%
-  options(radiant.path.data = .)
+ifelse (grepl("serenity.data", getwd()) && file.exists("../../inst") , "..", system.file(package = "serenity.data")) %>%
+  options(serenity.path.data = .)
 
 ## print options
 options(width = 250, scipen = 100)
@@ -88,7 +88,7 @@ list("n" = "length", "n_missing" = "n_missing", "n_distinct" = "n_distinct",
      "varpop" = "varpop", "sdpop" = "sdpop",
      "5%" = "p05", "10%" = "p10", "25%" = "p25", "75%" = "p75", "90%" = "p90",
      "95%" = "p95", "skew" = "skew","kurtosis" = "kurtosi") %>%
-options(radiant.functions = .)
+options(serenity.functions = .)
 
 ## for report and code in menu R
 knitr::opts_knit$set(progress = TRUE)
@@ -97,11 +97,11 @@ knitr::opts_chunk$set(echo = FALSE, comment = NA, cache = FALSE,
   # screenshot.force = FALSE,
   fig.path = normalizePath(tempdir(), winslash = "/"))
 
-options(radiant.nav_ui =
-  list(windowTitle = "Radiant", id = "nav_radiant", inverse = TRUE,
+options(serenity.nav_ui =
+  list(windowTitle = "Radiant", id = "nav_serenity", inverse = TRUE,
        collapsible = TRUE, tabPanel("Data", withMathJax(), uiOutput("ui_data"))))
 
-options(radiant.shared_ui =
+options(serenity.shared_ui =
   tagList(
     navbarMenu("R",
                tabPanel("Report", uiOutput("report"), icon = icon("edit")),
@@ -124,15 +124,15 @@ options(radiant.shared_ui =
 
     ## stop app *and* close browser window
     navbarMenu("", icon = icon("power-off"),
-               tabPanel(actionLink("stop_radiant", "Stop", icon = icon("stop"),
+               tabPanel(actionLink("stop_serenity", "Stop", icon = icon("stop"),
                                    onclick = "setTimeout(function(){window.close();}, 100); ")),
                if (rstudioapi::isAvailable()) {
-                 tabPanel(actionLink("stop_radiant_rmd", "Stop & Report", icon = icon("stop"),
+                 tabPanel(actionLink("stop_serenity_rmd", "Stop & Report", icon = icon("stop"),
                                      onclick = "setTimeout(function(){window.close();}, 100); "))
                } else {
                  tabPanel("")
                },
-               tabPanel(tags$a(id = "refresh_radiant", href = "#", class = "action-button",
+               tabPanel(tags$a(id = "refresh_serenity", href = "#", class = "action-button",
                                list(icon("refresh"), "Refresh"), onclick = "window.location.reload();")),
                ## had to remove class = "action-button" to make this work
                tabPanel(tags$a(id = "new_session", href = "./", target = "_blank",
@@ -145,24 +145,24 @@ options(radiant.shared_ui =
 r_sessions <- new.env(parent = emptyenv())
 
 ## create directory to hold session files
-file.path(normalizePath("~"),"radiant.sessions") %>% {if (!file.exists(.)) dir.create(.)}
+file.path(normalizePath("~"),"serenity.sessions") %>% {if (!file.exists(.)) dir.create(.)}
 
 ## adding the figures path to avoid making a copy of all figures in www/figures
-addResourcePath("figures", file.path(getOption("radiant.path.data"), "app/tools/help/figures/"))
-addResourcePath("imgs", file.path(getOption("radiant.path.data"), "app/www/imgs/"))
-addResourcePath("js", file.path(getOption("radiant.path.data"), "app/www/js/"))
+addResourcePath("figures", file.path(getOption("serenity.path.data"), "app/tools/help/figures/"))
+addResourcePath("imgs", file.path(getOption("serenity.path.data"), "app/www/imgs/"))
+addResourcePath("js", file.path(getOption("serenity.path.data"), "app/www/js/"))
 
-options(radiant.mathjax.path = "https://cdn.mathjax.org/mathjax/latest")
+options(serenity.mathjax.path = "https://cdn.mathjax.org/mathjax/latest")
 
 # using mathjax bundeled with Rstudio if available
 # if (Sys.getenv("RMARKDOWN_MATHJAX_PATH") == "") {
-#   options(radiant.mathjax.path = "https://cdn.mathjax.org/mathjax/latest")
+#   options(serenity.mathjax.path = "https://cdn.mathjax.org/mathjax/latest")
 # } else {
-#   options(radiant.mathjax.path = Sys.getenv("RMARKDOWN_MATHJAX_PATH"))
+#   options(serenity.mathjax.path = Sys.getenv("RMARKDOWN_MATHJAX_PATH"))
 # }
 
 # withMathJaxR <- function (...)  {
-#   path <- paste0(getOption("radiant.mathjax.path"),"/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
+#   path <- paste0(getOption("serenity.mathjax.path"),"/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
 #   tagList(tags$head(singleton(tags$script(src = path, type = "text/javascript"))),
 #           ..., tags$script(HTML("if (window.MathJax) MathJax.Hub.Queue([\"Typeset\", MathJax.Hub]);")))
 # }
@@ -176,7 +176,7 @@ help_menu <- function(hlp) {
       tabPanel("About", uiOutput("help_about"), icon = icon("info")),
       tabPanel(tags$a("", href = "https://radiant-rstats.github.io/docs/", target = "_blank",
                list(icon("globe"), "Radiant docs"))),
-      tabPanel(tags$a("", href = "https://github.com/radiant-rstats/radiant/issues", target = "_blank",
+      tabPanel(tags$a("", href = "https://github.com/serenity-r/serenity/issues", target = "_blank",
                list(icon("github"), "Report issue")))
     ),
     tags$head(
@@ -193,7 +193,7 @@ help_menu <- function(hlp) {
 }
 
 ## copy-right text
-options(radiant.help.cc = "&copy; Vincent Nijs (2017) <a rel='license' href='http://creativecommons.org/licenses/by-nc-sa/4.0/' target='_blank'><img alt='Creative Commons License' style='border-width:0' src ='imgs/80x15.png' /></a></br>")
+options(serenity.help.cc = "&copy; M. Drew LaMar (2017) <a rel='license' href='http://creativecommons.org/licenses/by-nc-sa/4.0/' target='_blank'><img alt='Creative Commons License' style='border-width:0' src ='imgs/80x15.png' /></a></br>")
 
 #####################################
 ## url processing to share results
@@ -205,7 +205,7 @@ options(radiant.help.cc = "&copy; Vincent Nijs (2017) <a rel='license' href='htt
 # https://gist.github.com/jcheng5/5427d6f264408abf3049
 
 ## try http://127.0.0.1:3174/?url=multivariate/conjoint/plot/&SSUID=local
-options(radiant.url.list =
+options(serenity.url.list =
   list("Data" = list("tabs_data" = list("Manage"    = "data/",
                                         "View"      = "data/view/",
                                         "Visualize" = "data/visualize/",
@@ -215,17 +215,17 @@ options(radiant.url.list =
                                         "Combine"   = "data/combine/"))
   ))
 
-make_url_patterns <- function(url_list = getOption("radiant.url.list"),
+make_url_patterns <- function(url_list = getOption("serenity.url.list"),
                               url_patterns = list()) {
   for (i in names(url_list)) {
     res <- url_list[[i]]
     if (!is.list(res)) {
-      url_patterns[[res]] <- list("nav_radiant" = i)
+      url_patterns[[res]] <- list("nav_serenity" = i)
     } else {
       tabs <- names(res)
       for (j in names(res[[tabs]])) {
         url <- res[[tabs]][[j]]
-        url_patterns[[url]] <- setNames(list(i,j), c("nav_radiant",tabs))
+        url_patterns[[url]] <- setNames(list(i,j), c("nav_serenity",tabs))
       }
     }
   }
@@ -233,17 +233,17 @@ make_url_patterns <- function(url_list = getOption("radiant.url.list"),
 }
 
 ## generate url patterns
-options(radiant.url.patterns = make_url_patterns())
+options(serenity.url.patterns = make_url_patterns())
 
 ## installed packages versions
-tmp <- grep("radiant.", installed.packages()[,"Package"], value = TRUE)
-if ("radiant" %in% installed.packages()) tmp <- c("radiant" = "radiant", tmp)
+tmp <- grep("serenity.", installed.packages()[,"Package"], value = TRUE)
+if ("serenity" %in% installed.packages()) tmp <- c("serenity" = "serenity", tmp)
 
-radiant.versions <- "Unknown"
+serenity.versions <- "Unknown"
 if (length(tmp) > 0)
-  radiant.versions <- sapply(names(tmp), function(x) paste(x, paste(packageVersion(x), sep = ".")))
+  serenity.versions <- sapply(names(tmp), function(x) paste(x, paste(packageVersion(x), sep = ".")))
 
-options(radiant.versions = paste(radiant.versions, collapse = ", "))
-rm(tmp, radiant.versions)
+options(serenity.versions = paste(serenity.versions, collapse = ", "))
+rm(tmp, serenity.versions)
 
 

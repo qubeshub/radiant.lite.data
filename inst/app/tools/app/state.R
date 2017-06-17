@@ -10,7 +10,7 @@ output$view_state <- renderUI({
         checkboxInput('show_state', 'Show state', FALSE),
         checkboxInput('show_session', 'Show session', FALSE)
       ),
-      help_modal('View state','state_help',inclMD(file.path(getOption("radiant.path.data"),"app/tools/help/state.md")))
+      help_modal('View state','state_help',inclMD(file.path(getOption("serenity.path.data"),"app/tools/help/state.md")))
     ),
     mainPanel(
       conditionalPanel(condition = "input.show_input == true",
@@ -30,9 +30,9 @@ output$view_state <- renderUI({
 })
 
 output$saveStateNav <- downloadHandler(
-  filename = function() { 
+  filename = function() {
     if (is.null(r_state$state_name)) {
-      paste0("radiant-state-",Sys.Date(),".rda") 
+      paste0("serenity-state-",Sys.Date(),".rda")
     } else {
       r_state$state_name
     }

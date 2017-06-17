@@ -1,5 +1,5 @@
-## ui for data menu in radiant
+## ui for data menu in serenity
 do.call(navbarPage,
-  c("Radiant", getOption("radiant.nav_ui"), getOption("radiant.shared_ui"),
+  c("Serenity", getOption("serenity.nav_ui"), getOption("serenity.shared_ui"),
     help_menu("help_data_ui"))
 )

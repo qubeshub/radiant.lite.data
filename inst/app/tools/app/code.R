@@ -1,9 +1,9 @@
 ################################################################
-# Run R-code within Radiant using the shinyAce editor
+# Run R-code within Serenity using the shinyAce editor
 ################################################################
 
 rcode_choices <- c("HTML","R-code")
-if (rstudioapi::isAvailable() || (!isTRUE(getOption("radiant.local")) && !is.null(session$user))) {
+if (rstudioapi::isAvailable() || (!isTRUE(getOption("serenity.local")) && !is.null(session$user))) {
   if (rstudioapi::isAvailable()) {
     rcode_choices <- c("Notebook","HTML","PDF","Word","R-code")
   } else {
@@ -30,11 +30,11 @@ dat %>% select(price, log_price) %>% head
 ## create a histogram of prices
 dat %>% ggplot(aes(x = price)) + geom_histogram()
 
-## and a histogram of log-prices using radiant.data::visualize
+## and a histogram of log-prices using serenity.data::visualize
 dat %>% visualize(xvar = \"log_price\", custom = TRUE)
 
-## open help in the R-studio viewer from Radiant
-help(package = 'radiant.data')
+## open help in the R-studio viewer from Serenity
+help(package = 'serenity.data')
 
 ## If you are familiar with Shiny you can call reactives when the code
 ## is evaluated inside a Shiny app. For example, if you transformed
@@ -43,7 +43,7 @@ help(package = 'radiant.data')
 # transform_main() %>% head"
 
 output$ui_rcode_save <- renderUI({
-  local <- getOption("radiant.local")
+  local <- getOption("serenity.local")
   if (isTRUE(local) || (!isTRUE(local) && !is.null(session$user))) {
     selectInput(inputId = "rcode_save", label = NULL,
       choices = rcode_choices,
@@ -56,7 +56,7 @@ output$ui_rcode_save <- renderUI({
 })
 
 output$ui_saveCodeReport <- renderUI({
-  local <- getOption("radiant.local")
+  local <- getOption("serenity.local")
   if (isTRUE(local) || (!isTRUE(local) && !is.null(session$user))) {
     downloadButton("saveCodeReport", "Save")
   } else {
@@ -68,7 +68,7 @@ output$rcode <- renderUI({
   tagList(
     with(tags,
       table(
-        td(help_modal('Code','code_help', inclMD(file.path(getOption("radiant.path.data"),"app/tools/help/code.md")))),
+        td(help_modal('Code','code_help', inclMD(file.path(getOption("serenity.path.data"),"app/tools/help/code.md")))),
         td(HTML("&nbsp;&nbsp;")),
         td(actionButton("rEval", "Run code"), style= "padding-top:5px;"),
         td(uiOutput("ui_rcode_save")),
@@ -80,7 +80,7 @@ output$rcode <- renderUI({
     ),
 
     shinyAce::aceEditor("rcode_edit", mode = "r",
-      vimKeyBinding = getOption("radiant.vim.keys", default = FALSE),
+      vimKeyBinding = getOption("serenity.vim.keys", default = FALSE),
       height="auto",
       selectionId = "rcode_selection",
       value = state_init("rcode_edit",rcode_example),
@@ -99,8 +99,8 @@ observe({
 output$rcode_output <- renderUI({
   if (valsCode$code == 1) return()
   isolate({
-    if (!isTRUE(getOption("radiant.local")) && is.null(session$user)) {
-      HTML("<h2>Rmd file is not evaluated when running Radiant on open-source Shiny Server</h2>")
+    if (!isTRUE(getOption("serenity.local")) && is.null(session$user)) {
+      HTML("<h2>Rmd file is not evaluated when running Serenity on open-source Shiny Server</h2>")
     } else {
       rcode_edit <-
         ifelse (is_empty(input$rcode_selection), input$rcode_edit, input$rcode_selection)
@@ -121,7 +121,7 @@ output$saveCodeReport <- downloadHandler(
     ))
   },
   content = function(file) {
-    local <- getOption("radiant.local")
+    local <- getOption("serenity.local")
     if (isTRUE(local) || (!isTRUE(local) && !is.null(session$user))) {
       isolate({
         ## temporarily switch to the temp dir, in case you do not have write
@@ -129,18 +129,18 @@ output$saveCodeReport <- downloadHandler(
         owd <- setwd(tempdir())
         on.exit(setwd(owd))
 
-        lib <- if ("radiant" %in% installed.packages()) "radiant" else "radiant.data"
+        lib <- if ("serenity" %in% installed.packages()) "serenity" else "serenity.data"
 
         rcode <- ifelse (is_empty(input$rcode_selection), input$rcode_edit, input$rcode_selection)
 
         if (input$rcode_save == "R-code & Data (zip)") {
           r_data <- toList(r_data)
           save(r_data, file = "r_data.rda")
-          paste0("## Load radiant if needed\nlibrary(", lib, ")\n\n## Load data\nload(\"r_data.rda\")\n\n", rcode,"\n") %>%
+          paste0("## Load serenity if needed\nlibrary(", lib, ")\n\n## Load data\nload(\"r_data.rda\")\n\n", rcode,"\n") %>%
             cat(file = "rcode.R", sep = "\n")
           zip(file, c("rcode.R","r_data.rda"))
         } else if (input$rcode_save == "R-code") {
-          paste0("## Load radiant if needed\nlibrary(", lib, ")\n\n", rcode,"\n") %>%
+          paste0("## Load serenity if needed\nlibrary(", lib, ")\n\n", rcode,"\n") %>%
             cat(file = file, sep = "\n")
         } else {
 

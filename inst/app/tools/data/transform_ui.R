@@ -75,7 +75,7 @@ output$ui_tr_reorg_levs <- renderUI({
       options = list(placeholder = "Select level(s)",
                      plugins = list("remove_button", "drag_drop"))),
     textInput("tr_rorepl", "Replacement level name:", value = NA)
-  )  
+  )
 })
 
 output$ui_tr_log <- renderUI({
@@ -268,7 +268,7 @@ output$ui_Transform <- renderUI({
 	  )),
     help_and_report(modal_title = "Transform",
                     fun_name = "transform",
-                    help_file = inclMD(file.path(getOption("radiant.path.data"), "app/tools/help/transform.md")))
+                    help_file = inclMD(file.path(getOption("serenity.path.data"), "app/tools/help/transform.md")))
 	)
 })
 
@@ -473,7 +473,7 @@ observeEvent(input$tr_change_type, {
   }
 }
 
-.spread <- function(dataset, key, value, 
+.spread <- function(dataset, key, value,
                     fill = NA,
                     vars = "",
                     store_dat = "",
@@ -534,7 +534,7 @@ observeEvent(input$tr_change_type, {
 
   if (!store && !is.character(dataset)) {
     if (is.na(bins) || !is.integer(bins)) return("Please specify the (integer) number of bins to use")
-    xt <- function(x, bins, rev) radiant.data::xtile(x, bins, rev = rev)
+    xt <- function(x, bins, rev) serenity.data::xtile(x, bins, rev = rev)
     select_(dataset, .dots = vars) %>%
     mutate_all(funs(xt(., bins, rev = rev))) %>%
     set_colnames(paste0(vars, .ext))
@@ -583,7 +583,7 @@ observeEvent(input$tr_change_type, {
 
   if (is_empty(name)) name <- fct
   if (!store || !is.character(dataset)) {
-    data.frame(refactor(dataset[[fct]], levs = levs, repl = repl)) %>% 
+    data.frame(refactor(dataset[[fct]], levs = levs, repl = repl)) %>%
       setNames(name)
   } else {
     if (store_dat == "") store_dat <- dataset
@@ -786,9 +786,9 @@ transform_main <- reactive({
       } else {
         cpdat <- try(read.table(header = TRUE, comment.char = "", fill = TRUE, sep = "\t", as.is = TRUE, text = input$tr_paste), silent = TRUE)
         if (is(cpdat, 'try-error')) {
-          return("The pasted data was not well formated. Please make sure the number of rows **\n** in the data in Radiant and in the spreadsheet are the same and try again.")
+          return("The pasted data was not well formated. Please make sure the number of rows **\n** in the data in Serenity and in the spreadsheet are the same and try again.")
         } else if (nrow(cpdat) != nrow(dat)) {
-          return("The pasted data does not have the correct number of rows. Please make sure **\n** the number of rows in the data in Radiant and in the spreadsheet are the **\n** same and try again.")
+          return("The pasted data does not have the correct number of rows. Please make sure **\n** the number of rows in the data in Serenity and in the spreadsheet are the **\n** same and try again.")
         } else {
           return(as.data.frame(cpdat, check.names = FALSE) %>% factorizer)
           # return(cpdat)
@@ -963,7 +963,7 @@ output$transform_summary <- renderPrint({
 
 observeEvent(input$tr_store, {
   dat <- transform_main()
- 
+
 	if (is.null(dat)) return()
 	if (is.character(dat)) return()
   if (min(dim(dat)) == 0) return()
@@ -982,7 +982,7 @@ observeEvent(input$tr_store, {
     #   ncmd %<>% paste0("r_data[[\"",paste0(dataset,"_descr"),"\"]] <- r_data[[\"", paste0(input$dataset,"_descr"),"\"]]")
     if (dataset == input$dataset)
       ncmd <- paste0("\n## register the new dataset\nregister(\"", dataset, "\")")
-    else 
+    else
       ncmd <- paste0("\n## register the new dataset\nregister(\"", dataset, "\", \"", input$dataset, "\")")
 	} else if (!dataset %in% r_data[["datasetlist"]]) {
     r_data[["datasetlist"]] %<>% c(dataset,.) %>% unique
@@ -993,7 +993,7 @@ observeEvent(input$tr_store, {
     #   ncmd %<>% paste0("r_data[[\"",paste0(dataset,"_descr"),"\"]] <- r_data[[\"", paste0(input$dataset,"_descr"),"\"]]")
     if (dataset == input$dataset)
       ncmd <- paste0("\n## register the new dataset\nregister(\"", dataset, "\")")
-    else 
+    else
       ncmd <- paste0("\n## register the new dataset\nregister(\"", dataset, "\", \"", input$dataset, "\")")
   }
 

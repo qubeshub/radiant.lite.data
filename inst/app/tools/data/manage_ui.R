@@ -1,5 +1,5 @@
 #######################################
-# Manage datasets in/out of Radiant
+# Manage datasets in/out of Serenity
 #######################################
 
 output$ui_fileUpload <- renderUI({
@@ -34,7 +34,7 @@ output$ui_fileUpload <- renderUI({
 })
 
 output$ui_clipboard_load <- renderUI({
-  if (isTRUE(getOption("radiant.local"))) {
+  if (isTRUE(getOption("serenity.local"))) {
     actionButton("loadClipData", "Paste", icon = icon("paste"))
   } else {
     tagList(
@@ -45,7 +45,7 @@ output$ui_clipboard_load <- renderUI({
 })
 
 output$ui_clipboard_save <- renderUI({
-  if (isTRUE(getOption("radiant.local"))) {
+  if (isTRUE(getOption("serenity.local"))) {
     actionButton("saveClipData", "Copy data", icon = icon("copy"))
   } else {
     tagList(
@@ -90,7 +90,7 @@ observeEvent(input$from_global_load, {
     r_data[[df]] <- get(df, envir = .GlobalEnv)
     if (input$from_global_move == "move") rm(list = df, envir = .GlobalEnv)
     r_data[[paste0(df,"_descr")]] <- attr(r_data[[df]],'description') %>%
-      { if (is.null(.)) "No description provided. Please use Radiant to add an overview of the data in markdown format.\n Check the 'Add/edit data description' box on the left of your screen" else . }
+      { if (is.null(.)) "No description provided. Please use Serenity to add an overview of the data in markdown format.\n Check the 'Add/edit data description' box on the left of your screen" else . }
   }
   updateSelectInput(session, "dataset", label = "Datasets:",
                     choices = r_data$datasetlist,
@@ -120,7 +120,7 @@ output$ui_Manage <- renderUI({
   data_types_out <- c("rda" = "rda", "rds" = "rds", "state" = "state", "csv" = "csv",
                       "feather" = "feather",
                       "clipboard" = "clipboard", "to global workspace" = "to_global")
-  if (!isTRUE(getOption("radiant.local"))) {
+  if (!isTRUE(getOption("serenity.local"))) {
     data_types_in <- data_types_in[-which(data_types_in == "from_global")]
     data_types_out <- data_types_out[-which(data_types_out == "to_global")]
   }
@@ -186,7 +186,7 @@ output$ui_Manage <- renderUI({
         actionButton("removeDataButton", "Remove data")
       )
     ),
-    help_modal("Manage","manage_help",inclMD(file.path(getOption("radiant.path.data"),"app/tools/help/manage.md")))
+    help_modal("Manage","manage_help",inclMD(file.path(getOption("serenity.path.data"),"app/tools/help/manage.md")))
   )
 })
 
@@ -351,7 +351,7 @@ observeEvent(input$url_csv_load, {
 ## loading all examples files (linked to help files)
 observeEvent(input$loadExampleData, {
   ## data.frame of example datasets
-  exdat <- data(package = getOption("radiant.example.data"))$results[, c("Package","Item")]
+  exdat <- data(package = getOption("serenity.example.data"))$results[, c("Package","Item")]
   # exdat <- data(package = r_example_data)$results[, c("Package","Item")]
 
   for (i in 1:nrow(exdat)) {
@@ -438,9 +438,9 @@ saveState <- function(filename) {
 }
 
 output$saveState <- downloadHandler(
-  filename = function() { 
+  filename = function() {
     if (is.null(r_state$state_name)) {
-      paste0("radiant-state-",Sys.Date(),".rda") 
+      paste0("serenity-state-",Sys.Date(),".rda")
     } else {
       r_state$state_name
     }
