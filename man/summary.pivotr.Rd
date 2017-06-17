@@ -24,7 +24,7 @@
 Summary method for pivotr
 }
 \details{
-See \url{https://radiant-rstats.github.io/docs/data/pivotr.html} for an example in Radiant
+See \url{https://radiant-rstats.github.io/docs/data/pivotr.html} for an example in Serenity
 }
 \examples{
 pivotr("diamonds", cvars = "cut") \%>\% summary(chi2 = TRUE)

@@ -2,8 +2,7 @@ Package: serenity.data
 Title: Data Menu for Serenity: Data Science in the Classroom
 Version: 0.0.0.9000
 Date: 2017-6-16
-Authors@R: c(person("M. Drew", "LaMar", email = "mdlama@wm.edu", role = c("aut", "cre")),
-person("Vincent", "Nijs", email = "radiant@rady.ucsd.edu", role = c("att")))
+Authors@R: c(person("M. Drew", "LaMar", email = "mdlama@wm.edu", role = c("aut", "cre")), person("Vincent", "Nijs", email = "radiant@rady.ucsd.edu", role = c("att")))
 Description: The Serenity Data menu includes interfaces for loading, saving,
     viewing, visualizing, summarizing, transforming, and combining data. It also
     contains functionality to generate reproducible reports of the analyses

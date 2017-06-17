@@ -2,7 +2,7 @@
 % Please edit documentation in R/view.R
 \name{register}
 \alias{register}
-\title{Register a data.frame in the datasetlist in Radiant}
+\title{Register a data.frame in the datasetlist in Serenity}
 \usage{
 register(new = "", org = "", descr = "", envir = parent.frame(), ...)
 }
@@ -18,8 +18,8 @@ register(new = "", org = "", descr = "", envir = parent.frame(), ...)
 \item{...}{further arguments passed to or from other methods}
 }
 \description{
-Register a data.frame in the datasetlist in Radiant
+Register a data.frame in the datasetlist in Serenity
 }
 \details{
-Store data frame in Radiant r_data list if available
+Store data frame in Serenity r_data list if available
 }

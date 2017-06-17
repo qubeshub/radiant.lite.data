@@ -22,5 +22,5 @@
 Store method for the Data > View tab
 }
 \details{
-Store data frame in Radiant r_data list if available
+Store data frame in Serenity r_data list if available
 }

@@ -9,7 +9,7 @@ explore(dataset, vars = "", byvar = "", fun = c("mean_rm", "sd_rm"),
   data_filter = "", shiny = FALSE)
 }
 \arguments{
-\item{dataset}{Dataset name (string). This can be a dataframe in the global environment or an element in an r_data list from Radiant}
+\item{dataset}{Dataset name (string). This can be a dataframe in the global environment or an element in an r_data list from Serenity}
 
 \item{vars}{(Numerical) variables to summaries}
 
@@ -25,7 +25,7 @@ explore(dataset, vars = "", byvar = "", fun = c("mean_rm", "sd_rm"),
 
 \item{nr}{Number of rows to display}
 
-\item{data_filter}{Expression entered in, e.g., Data > View to filter the dataset in Radiant. The expression should be a string (e.g., "price > 10000")}
+\item{data_filter}{Expression entered in, e.g., Data > View to filter the dataset in Serenity. The expression should be a string (e.g., "price > 10000")}
 
 \item{shiny}{Logical (TRUE, FALSE) to indicate if the function call originate inside a shiny app}
 }
@@ -36,7 +36,7 @@ A list of all variables defined in the function as an object of class explore
 Explore data
 }
 \details{
-See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Radiant
+See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Serenity
 }
 \examples{
 result <- explore("diamonds", "price:x")

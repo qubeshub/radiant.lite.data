@@ -12,7 +12,7 @@ visualize(dataset, xvar, yvar = "", comby = FALSE, combx = FALSE,
   shiny = FALSE, custom = FALSE)
 }
 \arguments{
-\item{dataset}{Dataset name (string). This can be a dataframe in the global environment or an element in an r_data list from Radiant}
+\item{dataset}{Dataset name (string). This can be a dataframe in the global environment or an element in an r_data list from Serenity}
 
 \item{xvar}{One or more variables to display along the X-axis of the plot}
 
@@ -67,11 +67,11 @@ Generated plots
 Visualize data using ggplot2 \url{http://ggplot2.tidyverse.org}
 }
 \details{
-See \url{https://radiant-rstats.github.io/docs/data/visualize.html} for an example in Radiant
+See \url{https://radiant-rstats.github.io/docs/data/visualize.html} for an example in Serenity
 }
 \examples{
 visualize("diamonds", "price:cut", type = "dist", fillcol = "red")
-visualize("diamonds", "carat:cut", yvar = "price", type = "scatter", 
+visualize("diamonds", "carat:cut", yvar = "price", type = "scatter",
   pointcol = "blue", fun = c("mean", "median"), linecol = c("red","green"))
 visualize(dataset = "diamonds", yvar = "price", xvar = c("cut","clarity"),
   type = "bar", fun = "median")
