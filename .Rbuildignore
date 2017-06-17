@@ -2,7 +2,6 @@
 ^\.Rproj\.user$
 ^inst/rstudio$
 coverage.R
-^.*\.sublime-project$
 ^\.travis\.yml$
 ^build$
 cran-comments.md

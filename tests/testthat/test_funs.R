@@ -1,5 +1,5 @@
 
-context("Radiant functions")
+context("Serenity functions")
 
 test_that("set_attr", {
   foo <- . %>% set_attr("foo", "something")
@@ -54,7 +54,7 @@ test_that("is_empty", {
 test_that("options", {
   options("width" = 10)
   options("scipen" = 0)
-  radiant.data:::.onLoad("","")
+  serenity.data:::.onLoad("","")
   expect_equal(options()$width, 200)
   expect_equal(options()$scipen, 100)
 })
