@@ -98,7 +98,7 @@ knitr::opts_chunk$set(echo = FALSE, comment = NA, cache = FALSE,
   fig.path = normalizePath(tempdir(), winslash = "/"))
 
 options(serenity.nav_ui =
-  list(windowTitle = "Radiant", id = "nav_serenity", inverse = TRUE,
+  list(windowTitle = "Serenity", id = "nav_serenity", inverse = TRUE,
        collapsible = TRUE, tabPanel("Data", withMathJax(), uiOutput("ui_data"))))
 
 options(serenity.shared_ui =
@@ -175,7 +175,7 @@ help_menu <- function(hlp) {
       tabPanel("Videos", uiOutput("help_videos"), icon = icon("film")),
       tabPanel("About", uiOutput("help_about"), icon = icon("info")),
       tabPanel(tags$a("", href = "https://radiant-rstats.github.io/docs/", target = "_blank",
-               list(icon("globe"), "Radiant docs"))),
+               list(icon("globe"), "Serenity docs"))),
       tabPanel(tags$a("", href = "https://github.com/serenity-r/serenity/issues", target = "_blank",
                list(icon("github"), "Report issue")))
     ),

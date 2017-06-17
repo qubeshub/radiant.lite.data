@@ -1,7 +1,7 @@
 #' Deprecated function(s) in the serenity.data package
 #'
 #' These functions are provided for compatibility with previous versions of
-#' radiant. They will eventually be  removed.
+#' serenity. They will eventually be  removed.
 #' @rdname serenity.data-deprecated
 #' @name serenity.data-deprecated
 #' @param ... Parameters to be passed to the updated functions

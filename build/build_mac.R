@@ -1,10 +1,10 @@
 ## build for mac
-# devtools::install("~/gh/radiant.data")
-# devtools::build("~/gh/radiant.data")
-# devtools::build("~/gh/radiant.data", binary = TRUE)
+# devtools::install("~/gh/serenity.data")
+# devtools::build("~/gh/serenity.data")
+# devtools::build("~/gh/serenity.data", binary = TRUE)
 
 ## build for mac
-app <- "radiant.data"
+app <- "serenity.data"
 path <- "~/gh"
 devtools::install(file.path(path, app))
 f <- devtools::build(file.path(path, app))

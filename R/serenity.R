@@ -146,7 +146,7 @@ getdata <- function(dataset,
     } else if (exists("r_environment") && !is.null(r_environment$r_data[[dataset]])) {
       r_environment$r_data[[dataset]]
     } else if (exists("r_data") && !is.null(r_data[[dataset]])) {
-      if (isTRUE(getOption("radiant.local"))) message("Dataset ", dataset, " loaded from r_data list\n")
+      if (isTRUE(getOption("serenity.local"))) message("Dataset ", dataset, " loaded from r_data list\n")
       r_data[[dataset]]
     } else if (exists(dataset)) {
       d_env <- pryr::where(dataset)
@@ -190,7 +190,7 @@ factorizer <- function(dat, safx = 30) {
   mutate_at(dat, .cols = toFct, .funs = funs(as.factor))
 }
 
-#' Load an rda or rds file and add it to the radiant data list (r_data) if available
+#' Load an rda or rds file and add it to the serenity data list (r_data) if available
 #'
 #' @param fn File name and path as a string. Extension must be either rda or rds
 #' @param objname Name to use for the data frame. Defaults to the file name
@@ -386,7 +386,7 @@ changedata <- function(dataset,
     message("Dataset ", dataset, " changed in r_environment\n")
     r_environment$r_data[[dataset]][,var_names] <- vars
   } else if (exists("r_data") && !is.null(r_data[[dataset]])) {
-    if (isTRUE(getOption("radiant.local"))) message("Dataset ", dataset, " loaded from r_data list\n")
+    if (isTRUE(getOption("serenity.local"))) message("Dataset ", dataset, " loaded from r_data list\n")
     d_env <- pryr::where("r_data")
     d_env$r_data[[dataset]][,var_names] <- vars
   } else if (exists(dataset)) {

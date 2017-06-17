@@ -4,7 +4,7 @@ if (!require(covr)) {
  	library(covr)
 }
 
-setwd("~/gh/radiant.data")
+setwd("~/gh/serenity.data")
 
 #cov <- package_coverage(type = "all")
 cov <- package_coverage(type = "example")

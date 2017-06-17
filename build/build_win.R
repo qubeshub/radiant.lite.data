@@ -1,9 +1,9 @@
 ## build for windows
-# devtools::install("../radiant.data")
-# devtools::build("../radiant.data", binary = TRUE)
+# devtools::install("../serenity.data")
+# devtools::build("../serenity.data", binary = TRUE)
 
 ## build for windows
-app <- "radiant.data"
+app <- "serenity.data"
 path <- "../"
 devtools::install(file.path(path, app))
 f <- devtools::build(file.path(path, app))

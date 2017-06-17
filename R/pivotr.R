@@ -1,6 +1,6 @@
 #' Create a pivot table using dplyr
 #'
-#' @details Create a pivot-table. See \url{https://radiant-rstats.github.io/docs/data/pivotr.html} for an example in Radiant
+#' @details Create a pivot-table. See \url{https://radiant-rstats.github.io/docs/data/pivotr.html} for an example in Serenity
 #'
 #' @param dataset Name of the dataframe to change
 #' @param cvars Categorical variables
@@ -108,7 +108,7 @@ pivotr <- function(dataset,
       set_colnames("Total")
 
     ## creating cross tab
-    tab <- spread_(tab, cvars[1], nvar) %>% ungroup %>% 
+    tab <- spread_(tab, cvars[1], nvar) %>% ungroup %>%
       mutate_at(.cols = cvars[-1], .funs = funs(as.character))
 
     tab <-
@@ -178,7 +178,7 @@ pivotr <- function(dataset,
 
 #' Summary method for pivotr
 #'
-#' @details See \url{https://radiant-rstats.github.io/docs/data/pivotr.html} for an example in Radiant
+#' @details See \url{https://radiant-rstats.github.io/docs/data/pivotr.html} for an example in Serenity
 #'
 #' @param object Return value from \code{\link{pivotr}}
 #' @param perc Display numbers as percentages (TRUE or FALSE)
@@ -255,7 +255,7 @@ summary.pivotr <- function(object,
 
 #' Make a pivot tabel in DT
 #'
-#' @details See \url{https://radiant-rstats.github.io/docs/data/pivotr.html} for an example in Radiant
+#' @details See \url{https://radiant-rstats.github.io/docs/data/pivotr.html} for an example in Serenity
 #'
 #' @param object Return value from \code{\link{pivotr}}
 #' @param format Show Color bar ("color_bar"),  Heat map ("heat"), or None ("none")
@@ -322,8 +322,8 @@ dtab.pivotr  <- function(object,
   fbox <- if (nrow(tab) > 5e6) "none" else list(position = "top")
   dt_tab <- {if (!perc) rounddf(tab, dec) else tab} %>%
   DT::datatable(
-    container = sketch, 
-    selection = "none", 
+    container = sketch,
+    selection = "none",
     rownames = FALSE,
     filter = fbox,
     # extension = "KeyTable",
@@ -372,7 +372,7 @@ dtab.pivotr  <- function(object,
 
 #' Plot method for the pivotr function
 #'
-#' @details See \url{https://radiant-rstats.github.io/docs/data/pivotr} for an example in Radiant
+#' @details See \url{https://radiant-rstats.github.io/docs/data/pivotr} for an example in Serenity
 #'
 #' @param x Return value from \code{\link{pivotr}}
 #' @param type Plot type to use ("fill" or "dodge" (default))
@@ -445,7 +445,7 @@ plot.pivotr <- function(x,
 
 #' Store method for the pivort function
 #'
-#' @details Add the summarized data to the r_data list in Radiant or return it. See \url{https://radiant-rstats.github.io/docs/data/pivotr.html} for an example in Radiant
+#' @details Add the summarized data to the r_data list in Serenity or return it. See \url{https://radiant-rstats.github.io/docs/data/pivotr.html} for an example in Serenity
 #'
 #' @param object Return value from \code{\link{pivotr}}
 #' @param name Name to assign to the dataset

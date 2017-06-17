@@ -1,4 +1,4 @@
-## building radiant packages for mac and windows
+## building serenity packages for mac and windows
 setwd("~/gh/")
 
 rv <- R.Version()
@@ -21,22 +21,22 @@ if (!file.exists(dirsrc)) dir.create(dirsrc, recursive = TRUE)
 if (!file.exists(dirmac)) dir.create(dirmac, recursive = TRUE)
 if (!file.exists(dirwin)) dir.create(dirwin, recursive = TRUE)
 
-## delete older version of radiant
+## delete older version of serenity
 rem_old <- function(app) {
 	unlink(paste0(dirsrc, "/", app, "*"))
 	unlink(paste0(dirmac, "/", app, "*"))
 	unlink(paste0(dirwin, "/", app, "*"))
 }
 
-sapply("radiant.data", rem_old)
+sapply("serenity.data", rem_old)
 
 ## avoid 'loaded namespace' stuff when building for mac
-system(paste0(Sys.which("R"), " -e \"source('~/gh/radiant.data/build/build_mac.R')\""))
+system(paste0(Sys.which("R"), " -e \"source('~/gh/serenity.data/build/build_mac.R')\""))
 
 win <- readline(prompt = "Did you build on Windows? y/n: ")
 if (grepl("[yY]", win)) {
 
-	## move packages to radiant_miniCRAN. must package in Windows first
+	## move packages to serenity_miniCRAN. must package in Windows first
 	setwd("~/gh/")
 	sapply(list.files(".",pattern = "*.tar.gz"), file.copy, dirsrc)
 	unlink("*.tar.gz")
@@ -52,7 +52,7 @@ if (grepl("[yY]", win)) {
 	# commit to repo
 	setwd("~/gh/minicran")
 	system("git add --all .")
-	mess <- paste0("radiant package update: ", format(Sys.Date(), format="%m-%d-%Y"))
+	mess <- paste0("serenity package update: ", format(Sys.Date(), format="%m-%d-%Y"))
 	system(paste0("git commit -m '",mess,"'"))
 	system("git push")
 
