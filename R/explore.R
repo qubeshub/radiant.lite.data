@@ -51,14 +51,14 @@ explore <- function(dataset,
   dc <- getclass(dat)
   isFctNum <- "factor" == dc & names(dc) %in% setdiff(vars,byvar)
   if (sum(isFctNum)) {
-    dat[,isFctNum] <- select(dat, which(isFctNum)) %>% 
+    dat[,isFctNum] <- select(dat, which(isFctNum)) %>%
       mutate_all(funs(as.integer(. == levels(.)[1])))
     dc[isFctNum] <- "integer"
   }
 
   isLogNum <- "logical" == dc & names(dc) %in% setdiff(vars,byvar)
   if (sum(isLogNum)) {
-    dat[,isLogNum] <- select(dat, which(isLogNum)) %>% 
+    dat[,isLogNum] <- select(dat, which(isLogNum)) %>%
       mutate_all(funs(as.integer))
     dc[isLogNum] <- "integer"
   }
@@ -83,7 +83,7 @@ explore <- function(dataset,
 
     ## convert categorical variables to factors if needed
     ## needed to deal with empty/missing values
-    dat[,byvar] <- select_(dat, .dots = byvar) %>% 
+    dat[,byvar] <- select_(dat, .dots = byvar) %>%
       mutate_all(funs(empty_level(.)))
 
     ## avoiding issues with n_missing and n_distinct in dplyr
@@ -350,7 +350,7 @@ dtab.explore <- function(object,
     list(rmarkdown::html_dependency_bootstrap('bootstrap')), dt_tab$dependencies
   )
 
-  # if (exists("r_environment") && isTRUE(r_environment$called_from_knitIt)) 
+  # if (exists("r_environment") && isTRUE(r_environment$called_from_knitIt))
   #   render(dt_tab)
   # else
   dt_tab
@@ -669,7 +669,7 @@ does_vary <- function(x, na.rm = TRUE) {
 #' @export
 make_funs <- function(x) {
   xclean <- gsub("_rm$","",x) %>% sub("length","n",.)
-  env <- if (exists("radiant.data")) environment(radiant.data::radiant.data) else parent.frame()
+  env <- if (exists("serenity.data")) environment(serenity.data::serenity.data) else parent.frame()
   dplyr::funs_(lapply(paste0(xclean, " = ~", x), as.formula, env = env) %>% setNames(xclean))
 }
 

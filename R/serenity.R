@@ -1,12 +1,12 @@
-#' Launch Radiant in the default browser
+#' Launch Serenity in the default browser
 #'
 #' @details See \url{https://radiant-rstats.github.io/docs} for documentation and tutorials
 #'
 #' @export
-radiant.data <- function() {
-  if (!"package:radiant.data" %in% search())
-    if (!require(radiant.data)) stop("Calling radiant.data start function but radiant.data is not installed.")
-  runApp(system.file("app", package = "radiant.data"), launch.browser = TRUE)
+serenity.data <- function() {
+  if (!"package:serenity.data" %in% search())
+    if (!require(serenity.data)) stop("Calling serenity.data start function but serenity.data is not installed.")
+  runApp(system.file("app", package = "serenity.data"), launch.browser = TRUE)
 }
 
 #' Install webshot and phantomjs
@@ -233,7 +233,7 @@ loadr <- function(fn, objname = "") {
   }
 }
 
-#' Save data.frame as an rda or rds file from Radiant
+#' Save data.frame as an rda or rds file from Serenity
 #'
 #' @param objname Name of the data frame
 #' @param file File name and path as a string. Extension must be either rda or rds
@@ -434,7 +434,7 @@ viewdata <- function(dataset,
 
   shinyApp(
     ui = fluidPage(title = title,
-      includeCSS(file.path(system.file(package = "radiant.data"),"app/www/style.css")),
+      includeCSS(file.path(system.file(package = "serenity.data"),"app/www/style.css")),
       fluidRow(DT::dataTableOutput("tbl")),
       actionButton("stop", "Stop", class = "btn-danger", onclick = "window.close();")
     ),
@@ -501,7 +501,7 @@ dtab.data.frame <- function(object,
     dat[,isBigFct] <- select(dat, which(isBigFct)) %>% mutate_all(funs(as.character))
 
   ## for display options see https://datatables.net/reference/option/dom
-  if (is_empty(dom)) 
+  if (is_empty(dom))
     dom <- if (pageLength == -1 || nrow(dat) < pageLength) "t" else "lftip"
 
   dt_tab <- rounddf(dat, dec) %>%
@@ -645,7 +645,7 @@ iterms <- function(vars, nway, sep = ":") {
 #'
 #' @examples
 #'
-#' copy_from(radiant.data, getdata)
+#' copy_from(serenity.data, getdata)
 #'
 #' @export
 copy_from <- function(.from, ...) {
@@ -679,7 +679,7 @@ copy_from <- function(.from, ...) {
 #' @param .from The package to pull the function from
 #'
 #' @examples
-#' copy_all(radiant.data)
+#' copy_all(serenity.data)
 #'
 #' @export
 copy_all <- function(.from) {
@@ -913,7 +913,7 @@ which.pmax <- function(...) as.integer(unname(unlist(apply(cbind(...), 1, which.
 #' @export
 which.pmin <- function(...) unname(apply(cbind(...), 1, which.min))
 
-#' Method to store variables in a dataset in Radiant
+#' Method to store variables in a dataset in Serenity
 #'
 #' @param object Object of relevant class that has required information to store
 #' @param ... Additional arguments
@@ -1034,7 +1034,7 @@ render.datatables <- function(object, ...) DT::renderDataTable(object)
       # DT::renderDataTable(x)
     # )
   # } else {
-    # knitr::knit_print(htmlwidgets::toHTML(x, standalone = FALSE, knitrOptions = NULL), 
+    # knitr::knit_print(htmlwidgets::toHTML(x, standalone = FALSE, knitrOptions = NULL),
     #     options = NULL, ...)
     # htmlwidgets::knit_print.htmlwidget(x)
     # knitr::knit_print.htmlwidget(x)

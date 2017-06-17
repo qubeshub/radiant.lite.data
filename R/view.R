@@ -1,6 +1,6 @@
 #' Search for a string in all columns of a data.frame
 #'
-#' @details See \url{https://radiant-rstats.github.io/docs/data/view.html} for an example in Radiant
+#' @details See \url{https://radiant-rstats.github.io/docs/data/view.html} for an example in Serenity
 #'
 #' @param pattern String to match
 #' @param df Data.frame to search
@@ -19,7 +19,7 @@ Search <- function(pattern, df, ignore.case = TRUE, fixed = FALSE) {
 
 #' Store method for the Data > View tab
 #'
-#' @details Store data frame in Radiant r_data list if available
+#' @details Store data frame in Serenity r_data list if available
 #'
 #' @param object Filtered data frame from the Data > View tab
 #' @param new Name of the new dataset
@@ -52,9 +52,9 @@ store.data.frame <- function(object, new = "", org = "", envir = parent.frame(),
 }
 
 
-#' Register a data.frame in the datasetlist in Radiant
+#' Register a data.frame in the datasetlist in Serenity
 #'
-#' @details Store data frame in Radiant r_data list if available
+#' @details Store data frame in Serenity r_data list if available
 #'
 #' @param new Name of the new dataset
 #' @param org Name of the original data

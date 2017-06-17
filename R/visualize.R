@@ -1,8 +1,8 @@
 #' Visualize data using ggplot2 \url{http://ggplot2.tidyverse.org}
 #'
-#' @details See \url{https://radiant-rstats.github.io/docs/data/visualize.html} for an example in Radiant
+#' @details See \url{https://radiant-rstats.github.io/docs/data/visualize.html} for an example in Serenity
 #'
-#' @param dataset Dataset name (string). This can be a dataframe in the global environment or an element in an r_data list from Radiant
+#' @param dataset Dataset name (string). This can be a dataframe in the global environment or an element in an r_data list from Serenity
 #' @param xvar One or more variables to display along the X-axis of the plot
 #' @param yvar Variable to display along the Y-axis of the plot (default = "none")
 #' @param comby Combine yvars in plot (TRUE or FALSE, FALSE is the default)
@@ -31,7 +31,7 @@
 #'
 #' @examples
 #' visualize("diamonds", "price:cut", type = "dist", fillcol = "red")
-#' visualize("diamonds", "carat:cut", yvar = "price", type = "scatter", 
+#' visualize("diamonds", "carat:cut", yvar = "price", type = "scatter",
 #'   pointcol = "blue", fun = c("mean", "median"), linecol = c("red","green"))
 #' visualize(dataset = "diamonds", yvar = "price", xvar = c("cut","clarity"),
 #'   type = "bar", fun = "median")
@@ -313,7 +313,7 @@ visualize <- function(dataset, xvar,
             data.frame(ymin = y, ymax = y, y = y)
           }
           plot_list[[itt]] <- plot_list[[itt]] +
-            stat_summary(fun.data = fun1, aes(fill = fun[1]), 
+            stat_summary(fun.data = fun1, aes(fill = fun[1]),
               geom = "crossbar", show.legend = TRUE, color = linecol[1])
 
           if (length(fun) > 1) {
@@ -341,7 +341,7 @@ visualize <- function(dataset, xvar,
 
           ## adding a legend if needed
           if (length(fun) > 1 && length(linecol) > 1) {
-            plot_list[[itt]] <- plot_list[[itt]] + 
+            plot_list[[itt]] <- plot_list[[itt]] +
               scale_fill_manual(name = "", values = linecol, labels = fun) +
               ## next line based on https://stackoverflow.com/a/25294787/1974918
               guides(fill = guide_legend(override.aes = list(color = NULL)))
@@ -393,7 +393,7 @@ visualize <- function(dataset, xvar,
         if (color == 'none') {
           if (dc[i] %in% c("factor","date")) {
             tbv <- if (is.null(byvar)) i else c(i, byvar)
-            tmp <- dat %>% group_by_(.dots = tbv) %>% select_(.dots = c(tbv, j)) %>% 
+            tmp <- dat %>% group_by_(.dots = tbv) %>% select_(.dots = c(tbv, j)) %>%
               summarise_all(make_funs(fun))
             colnames(tmp)[ncol(tmp)] <- j
             plot_list[[itt]] <- ggplot(tmp, aes_string(x = i, y = j)) + geom_line(aes(group = 1), color = linecol)
@@ -404,7 +404,7 @@ visualize <- function(dataset, xvar,
         } else {
           if (dc[i] %in% c("factor","date")) {
             tbv <- if (is.null(byvar)) i else unique(c(i, byvar))
-            tmp <- dat %>% group_by_(.dots = tbv) %>% select_(.dots = c(tbv, color, j)) %>% 
+            tmp <- dat %>% group_by_(.dots = tbv) %>% select_(.dots = c(tbv, color, j)) %>%
               summarise_all(make_funs(fun))
             colnames(tmp)[ncol(tmp)] <- j
             plot_list[[itt]] <- ggplot(tmp, aes_string(x = i, y = j, color = color, group = color)) + geom_line()
@@ -429,7 +429,7 @@ visualize <- function(dataset, xvar,
       if ("log_x" %in% axes) axes <- sub("log_x","",axes)
       for (j in yvar) {
         tbv <- if (is.null(byvar)) i else c(i, byvar)
-        tmp <- dat %>% group_by_(.dots = tbv) %>% select_(.dots = c(tbv, j)) %>% 
+        tmp <- dat %>% group_by_(.dots = tbv) %>% select_(.dots = c(tbv, j)) %>%
           summarise_all(make_funs(fun))
         colnames(tmp)[ncol(tmp)] <- j
 

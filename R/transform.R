@@ -1,7 +1,7 @@
 #' Center
 #' @param x Input variable
 #' @param na.rm If TRUE missing values are removed before calculation
-#' @return If x is a numberic variable return x - mean(x)
+#' @return If x is a numeric variable return x - mean(x)
 #' @export
 center <- function(x, na.rm = TRUE)
 	if (is.numeric(x)) { x - mean(x, na.rm = na.rm) } else x
@@ -311,7 +311,7 @@ mutate_ext <- function(.tbl, .funs, ..., .ext = "") {
   }
 }
 
-#' Temporary fix for mutate_if when the predicate is false for all columns 
+#' Temporary fix for mutate_if when the predicate is false for all columns
 #'
 #' @details See https://github.com/tidyverse/dplyr/issues/2617
 #'
@@ -322,7 +322,7 @@ mutate_ext <- function(.tbl, .funs, ..., .ext = "") {
 #'
 #' @export
 mutate_if_tmp <- function (.tbl, .predicate, .funs, ...) {
-  if (sum(sapply(.tbl, .predicate)) > 0) { 
+  if (sum(sapply(.tbl, .predicate)) > 0) {
     rn <- rownames(.tbl)
     cn <- colnames(.tbl)
     colnames(.tbl) <- make.names(cn)
@@ -406,7 +406,7 @@ weighted.sd <- function(x, wt, na.rm = TRUE) {
 
 #' Create data.frame summary
 #'
-#' @details Used in Radiant's Data > Transform tab
+#' @details Used in Serenity's Data > Transform tab
 #'
 #' @param dat Data.frame
 #' @param dc Class for each variable
@@ -433,7 +433,7 @@ getsummary <- function(dat, dc = getclass(dat)) {
                      mean = mean_rm, median = median_rm, min = min_rm, max = max_rm,
                      `25%` = p25, `75%` = p75, sd = sd_rm, se = se)) %>%
       data.frame(check.names = FALSE) %>%
-      ## can't use mutate_if here due to https://github.com/tidyverse/dplyr/issues/2243 
+      ## can't use mutate_if here due to https://github.com/tidyverse/dplyr/issues/2243
       # mutate_if_tmp(is.numeric, funs(round(., 3))) %>%
       mutate_all(funs(if (is.numeric(.)) round(., 3) else .)) %>%
       set_colnames(c("", colnames(.)[-1])) %>%
@@ -486,7 +486,7 @@ getsummary <- function(dat, dc = getclass(dat)) {
       matrix(ncol = 3) %>%
       data.frame %>%
       set_colnames(c("# TRUE", "% TRUE", "n_missing")) %>%
-      set_rownames(names(dat)[isLogic]) %>% 
+      set_rownames(names(dat)[isLogic]) %>%
       print
     cat("\n")
   }
@@ -575,8 +575,8 @@ wday <- function(x, label = FALSE, abbr = TRUE, ordered = FALSE) {
   x
 }
 
-#' Remove/reorder levels 
-#' @details Keep only a specific set of levels in a factor. By removing levels the base for comparison in, e.g., regression analysis, becomes the first level. To relable the base use, for example, repl = 'other' 
+#' Remove/reorder levels
+#' @details Keep only a specific set of levels in a factor. By removing levels the base for comparison in, e.g., regression analysis, becomes the first level. To relable the base use, for example, repl = 'other'
 #' @param x Character or Factor
 #' @param levs Set of levels to use
 #' @param repl String (or NA) used to replace missing levels
@@ -595,12 +595,12 @@ refactor <- function(x, levs = levels(x), repl = NA) {
   } else {
     return(x)
   }
-  
+
   if (length(levs) > 0 && length(lv) > length(levs)) {
     if (!is_empty(repl)) levs <- unique(c(repl, levs))
     x <- as_character(x) %>% ifelse (. %in% setdiff(lv, levs), repl, .)
   }
-  
+
   factor(x, levels = levs)
 }
 

@@ -3,9 +3,9 @@ globalVariables(c("r_environment", "session", "r_data", "r_state", ".",
                   ".rs.restartR", "..density..", "Total", "tfoot", "thead",
                   "tr", "th", "variable", "y", "matches"))
 
-#' radiant.data
+#' serenity.data
 #'
-#' @name radiant.data
+#' @name serenity.data
 #' @docType package
 #' @import ggplot2 shiny dplyr
 #' @importFrom car Recode
