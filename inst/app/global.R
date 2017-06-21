@@ -1,10 +1,17 @@
+# Shrink load times ----
+
 ## based on https://github.com/rstudio/shiny/issues/1237
+## This is to help shrink load times.
+## Might be a bug in RStudio that will be fixed in the future.
+## See the above GitHub issue for more information.
 suppressWarnings(
   try(
     rm("registerShinyDebugHook", envir = as.environment("tools:rstudio")),
     silent = TRUE
   )
 )
+
+# Import functions ----
 
 ## function to load/import required packages and functions
 import_fs <- function(ns, libs = c(), incl = c(), excl = c()) {
@@ -28,7 +35,12 @@ import_fs <- function(ns, libs = c(), incl = c(), excl = c()) {
   invisible()
 }
 
+## import required functions and packages
 import_fs("serenity.data", libs = "plotly", incl = "ggplotly")
+if (!"package:serenity.data" %in% search())
+  import_fs("serenity.data", libs = c("magrittr","ggplot2","lubridate","tidyr","dplyr","broom","tibble"))
+
+# Initialize reactive data ----
 
 init_data <- function() {
 
@@ -53,11 +65,9 @@ init_data <- function() {
   r_data
 }
 
-## import required functions and packages
-if (!"package:serenity.data" %in% search())
-  import_fs("serenity.data", libs = c("magrittr","ggplot2","lubridate","tidyr","dplyr","broom","tibble"))
+# Local vs server ----
 
-## running local or on a server
+## Running local or on a server
 if (Sys.getenv('SHINY_PORT') == "") {
   options(serenity.local = TRUE)
   ## no limit to filesize locally
@@ -68,18 +78,20 @@ if (Sys.getenv('SHINY_PORT') == "") {
   options(shiny.maxRequestSize = 10 * 1024^2)
 }
 
-## encoding
-options(serenity.encoding = "UTF-8")
-
-## path to use for local or server use
-ifelse (grepl("serenity.data", getwd()) && file.exists("../../inst") , "..", system.file(package = "serenity.data")) %>%
+## Path to use for local or server use
+ifelse (grepl("serenity.data", getwd()) && file.exists("../../inst") ,
+        "..",
+        system.file(package = "serenity.data")) %>%
   options(serenity.path.data = .)
 
-## print options
+# Encoding ----
+options(serenity.encoding = "UTF-8")
+
+# Print options ----
 options(width = 250, scipen = 100)
 options(max.print = max(getOption("max.print"), 5000))
 
-## list of function arguments
+# List of function arguments ----
 list("n" = "length", "n_missing" = "n_missing", "n_distinct" = "n_distinct",
      "mean" = "mean_rm", "median" = "median_rm", "min" = "min_rm",
      "max" = "max_rm", "sum" = "sum_rm",
@@ -90,22 +102,37 @@ list("n" = "length", "n_missing" = "n_missing", "n_distinct" = "n_distinct",
      "95%" = "p95", "skew" = "skew","kurtosis" = "kurtosi") %>%
 options(serenity.functions = .)
 
-## for report and code in menu R
+## For report and code in menu R ----
+
 knitr::opts_knit$set(progress = TRUE)
 knitr::opts_chunk$set(echo = FALSE, comment = NA, cache = FALSE,
   message = FALSE, warning = FALSE, error = TRUE, dpi = 96,
   # screenshot.force = FALSE,
   fig.path = normalizePath(tempdir(), winslash = "/"))
 
+## Create UI ----
 options(serenity.nav_ui =
-  list(windowTitle = "Serenity", id = "nav_serenity", inverse = TRUE,
-       collapsible = TRUE, tabPanel("Data", withMathJax(), uiOutput("ui_data"))))
+  list(windowTitle = "Serenity",
+       id = "nav_serenity",
+       inverse = TRUE,
+       collapsible = TRUE,
+       tabPanel("Data",
+                withMathJax(),
+                uiOutput("ui_data")
+                )
+       )
+  )
 
 options(serenity.shared_ui =
   tagList(
     navbarMenu("R",
-               tabPanel("Report", uiOutput("report"), icon = icon("edit")),
-               tabPanel("Code", uiOutput("rcode"), icon = icon("code"))
+               tabPanel("Report",
+                        uiOutput("report"),
+                        icon = icon("edit")),
+               tabPanel("Code",
+                        uiOutput("rcode"),
+                        icon = icon("code")
+                        )
     ),
 
     navbarMenu("", icon = icon("save"),
@@ -136,10 +163,39 @@ options(serenity.shared_ui =
                                list(icon("refresh"), "Refresh"), onclick = "window.location.reload();")),
                ## had to remove class = "action-button" to make this work
                tabPanel(tags$a(id = "new_session", href = "./", target = "_blank",
-                               list(icon("plus"), "New session")))
+                               list(icon("plus"), "New session")
+                               )
+                        )
+               )
     )
   )
-)
+
+## function to generate help, must be in global because used in ui.R
+help_menu <- function(hlp) {
+  tagList(
+    navbarMenu("", icon = icon("question-circle"),
+               tabPanel("Help", uiOutput(hlp), icon = icon("question")),
+               tabPanel("Videos", uiOutput("help_videos"), icon = icon("film")),
+               tabPanel("About", uiOutput("help_about"), icon = icon("info")),
+               tabPanel(tags$a("", href = "https://radiant-rstats.github.io/docs/", target = "_blank",
+                               list(icon("globe"), "Serenity docs"))),
+               tabPanel(tags$a("", href = "https://github.com/serenity-r/serenity/issues", target = "_blank",
+                               list(icon("github"), "Report issue")))
+    ),
+    tags$head(
+      tags$script(src = "js/session.js"),
+      tags$script(src = "js/returnTextAreaBinding.js"),
+      tags$script(src = "js/returnTextInputBinding.js"),
+      tags$script(src = "js/video_reset.js"),
+      tags$script(src = "js/message-handler.js"),
+      tags$script(src = "js/run_return.js"),
+      # tags$script(src = "js/draggable_modal.js"),
+      tags$link(rel = "shortcut icon", href = "imgs/icon.png")
+    )
+  )
+}
+
+# Session info ----
 
 ## environment to hold session information
 r_sessions <- new.env(parent = emptyenv())
@@ -167,37 +223,10 @@ options(serenity.mathjax.path = "https://cdn.mathjax.org/mathjax/latest")
 #           ..., tags$script(HTML("if (window.MathJax) MathJax.Hub.Queue([\"Typeset\", MathJax.Hub]);")))
 # }
 
-## function to generate help, must be in global because used in ui.R
-help_menu <- function(hlp) {
-  tagList(
-    navbarMenu("", icon = icon("question-circle"),
-      tabPanel("Help", uiOutput(hlp), icon = icon("question")),
-      tabPanel("Videos", uiOutput("help_videos"), icon = icon("film")),
-      tabPanel("About", uiOutput("help_about"), icon = icon("info")),
-      tabPanel(tags$a("", href = "https://radiant-rstats.github.io/docs/", target = "_blank",
-               list(icon("globe"), "Serenity docs"))),
-      tabPanel(tags$a("", href = "https://github.com/serenity-r/serenity/issues", target = "_blank",
-               list(icon("github"), "Report issue")))
-    ),
-    tags$head(
-      tags$script(src = "js/session.js"),
-      tags$script(src = "js/returnTextAreaBinding.js"),
-      tags$script(src = "js/returnTextInputBinding.js"),
-      tags$script(src = "js/video_reset.js"),
-      tags$script(src = "js/message-handler.js"),
-      tags$script(src = "js/run_return.js"),
-      # tags$script(src = "js/draggable_modal.js"),
-      tags$link(rel = "shortcut icon", href = "imgs/icon.png")
-    )
-  )
-}
-
 ## copy-right text
 options(serenity.help.cc = "&copy; M. Drew LaMar (2017) <a rel='license' href='http://creativecommons.org/licenses/by-nc-sa/4.0/' target='_blank'><img alt='Creative Commons License' style='border-width:0' src ='imgs/80x15.png' /></a></br>")
 
-#####################################
-## url processing to share results
-#####################################
+# URL processing to share results ----
 
 ## relevant links
 # http://stackoverflow.com/questions/25306519/shiny-saving-url-state-subpages-and-tabs/25385474#25385474
@@ -235,7 +264,7 @@ make_url_patterns <- function(url_list = getOption("serenity.url.list"),
 ## generate url patterns
 options(serenity.url.patterns = make_url_patterns())
 
-## installed packages versions
+## Installed packages versions ----
 tmp <- grep("serenity.", installed.packages()[,"Package"], value = TRUE)
 if ("serenity" %in% installed.packages()) tmp <- c("serenity" = "serenity", tmp)
 
@@ -245,5 +274,3 @@ if (length(tmp) > 0)
 
 options(serenity.versions = paste(serenity.versions, collapse = ", "))
 rm(tmp, serenity.versions)
-
-
