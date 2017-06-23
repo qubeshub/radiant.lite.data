@@ -68,6 +68,7 @@ init_data <- function() {
 # Local vs server ----
 
 ## Running local or on a server
+# print (paste0("On server? ", ifelse(Sys.getenv('SHINY_PORT') == "", "No", "Yes")))
 if (Sys.getenv('SHINY_PORT') == "") {
   options(serenity.local = TRUE)
   ## no limit to filesize locally
@@ -136,13 +137,17 @@ options(serenity.shared_ui =
     ),
 
     navbarMenu("", icon = icon("save"),
+               ## Weird icon issue:  https://groups.google.com/forum/#!topic/shiny-discuss/R88VpjRRu_U
+               # This doesn't work:  tabPanel(downloadLink("saveStateNav", "Save state", icon = icon("cloud-download"))),
                tabPanel(downloadLink("saveStateNav", " Save state", class = "fa fa-download")),
                ## waiting for this feature in Shiny
                # tabPanel(tags$a(id = "loadStateNav", href = "", class = "shiny-input-container",
                #                 type='file', accept='.rmd,.Rmd,.md', list(icon("refresh"), "Refresh"))),
                # tabPanel(uploadLink("loadState", "Load state"), icon = icon("folder-open")),
                tabPanel(actionLink("shareState", "Share state", icon = icon("share"))),
-               tabPanel("View state", uiOutput("view_state"), icon = icon("user"))
+               tabPanel("View state", uiOutput("view_state"), icon = icon("user")),
+               HTML("<hr/>"),
+               tabPanel("Storage space", uiOutput("storage_location"), icon = icon("hdd-o"))
     ),
 
     ## works but badly aligned in navbar
