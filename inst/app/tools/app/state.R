@@ -5,10 +5,11 @@ output$view_state <- renderUI({
   sidebarLayout(
     sidebarPanel(
       wellPanel(
-        checkboxInput('show_input', 'Show input', FALSE),
+        checkboxInput('show_input', 'Show Shiny input', FALSE),
         checkboxInput('show_data', 'Show r_data', FALSE),
-        checkboxInput('show_state', 'Show state', FALSE),
-        checkboxInput('show_session', 'Show session', FALSE)
+        checkboxInput('show_state', 'Show r_state', FALSE),
+        checkboxInput('show_session', 'Show client info', FALSE),
+        checkboxInput('show_options', 'Show global options', FALSE)
       ),
       help_modal('View state','state_help',inclMD(file.path(getOption("serenity.path.data"),"app/tools/help/state.md")))
     ),
@@ -24,6 +25,9 @@ output$view_state <- renderUI({
       ),
       conditionalPanel(condition = "input.show_session == true",
         verbatimTextOutput("show_session")
+      ),
+      conditionalPanel(condition = "input.show_options == true",
+        verbatimTextOutput("show_options")
       )
     )
   )
@@ -51,7 +55,7 @@ observeEvent(input$shareState, {
 output$show_session <- renderPrint({
   input$show_session ## only update when you toggle the checkbox
   isolate({
-    cat("Session list:\n")
+    cat("clientData list:\n")
     s <- toList(session$clientData)
     str(s[sort(names(s))])
   })
@@ -79,4 +83,10 @@ output$show_state <- renderPrint({
   if (is.null(r_state)) return()
   if (length(r_state) == 0) return("[empty]")
   str(r_state[sort(names(r_state))])
+})
+
+output$show_options <- renderPrint({
+  cat("Global options:\n")
+  ops <- options()
+  str(ops[grep("serenity", names(ops))])
 })

@@ -68,6 +68,7 @@ init_data <- function() {
 # Local vs server ----
 
 ## Running local or on a server
+# https://stackoverflow.com/questions/31423144/how-to-know-if-the-app-is-running-at-local-or-on-server-r-shiny
 # print (paste0("On server? ", ifelse(Sys.getenv('SHINY_PORT') == "", "No", "Yes")))
 if (Sys.getenv('SHINY_PORT') == "") {
   options(serenity.local = TRUE)
