@@ -7,7 +7,7 @@ shinyServer(function(input, output, session) {
   ## packages to use for example data
   options(serenity.example.data = "serenity.data")
 
-	## source data & analysis tools
+	## source data & analysis tools from files in tools/app and tools/data directories
   for (file in list.files(c("tools/app","tools/data"), pattern="\\.(r|R)$", full.names = TRUE))
   	source(file, encoding = getOption("serenity.encoding"), local = TRUE)
 

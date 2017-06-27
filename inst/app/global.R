@@ -147,8 +147,7 @@ options(serenity.shared_ui =
                # tabPanel(uploadLink("loadState", "Load state"), icon = icon("folder-open")),
                tabPanel(actionLink("shareState", "Share state", icon = icon("share"))),
                tabPanel("View state", uiOutput("view_state"), icon = icon("user")),
-               HTML("<hr/>"),
-               tabPanel("Storage space", uiOutput("storage_location"), icon = icon("hdd-o"))
+               tabPanel(actionLink("storageNav", "Storage space", icon = icon("hdd-o")))
     ),
 
     ## works but badly aligned in navbar
@@ -207,7 +206,8 @@ help_menu <- function(hlp) {
 r_sessions <- new.env(parent = emptyenv())
 
 ## create directory to hold session files
-file.path(normalizePath("~"),"serenity.sessions") %>% {if (!file.exists(.)) dir.create(.)}
+file.path(normalizePath("~"),"serenity.sessions") %>%
+  {if (!file.exists(.)) dir.create(.)}
 
 ## adding the figures path to avoid making a copy of all figures in www/figures
 addResourcePath("figures", file.path(getOption("serenity.path.data"), "app/tools/help/figures/"))
