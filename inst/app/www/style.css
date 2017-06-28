@@ -40,12 +40,12 @@ table.dataTable tfoot td, table.dataTable thead td {
 .modal-dialog {
   padding-top: 80px;
   padding-left: 80px;
-  width: 850px;
+  /* max-width: 850px; */
   overflow-y: initial !important
 }
 
 .modal-body{
-  height: 600px;
+  max-height: 600px;
   overflow-y: auto;
 }
 

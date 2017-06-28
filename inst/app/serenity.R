@@ -1,9 +1,9 @@
-################################################################################
-## function to save app state on refresh or crash
-################################################################################
+### ### ### ### ### ### ### ### ### ### ### ### ### ###
+## Functions to save app state on refresh or crash -----
+### ### ### ### ### ### ### ### ### ### ### ### ### ###
 
 ## drop NULLs in list
-toList <- function(x) reactiveValuesToList(x) %>% .[!sapply(., is.null)]
+toList <- function(x) { reactiveValuesToList(x) %>% .[!sapply(., is.null)] }
 
 saveSession <- function(session = session) {
   if (!exists("r_sessions")) return()
@@ -60,9 +60,9 @@ saveStateOnRefresh <- function(session = session) {
   })
 }
 
-################################################################
-## functions used across tools in serenity
-################################################################
+### ### ### ### ### ### ### ### ### ### ### ###
+## Functions used across tools in serenity ----
+### ### ### ### ### ### ### ### ### ### ### ###
 
 ## get active dataset and apply data-filter if available
 .getdata <- reactive({
@@ -132,7 +132,6 @@ groupable_vars_nonum <- reactive({
     {which(. == TRUE)} %>%
     varnames()[.]
 })
-
 
 ## used in compare proportions
 two_level_vars <- reactive({
@@ -246,9 +245,16 @@ print.capture_plot <- function(x, ...) {
   eval(x$expr, x$env)
 }
 
-################################################################
-## functions used to create Shiny in and outputs
-################################################################
+### ### ### ### ### ### ### ### ### ### ### ### ### #
+## Functions used to create Shiny IOs ----
+### ### ### ### ### ### ### ### ### ### ### ### ### #
+
+##
+serenityFileInput <- function(inputId, label, multiple = TRUE, accept = "csv") {
+  isolate(
+    if (accept == "csv") {}
+  )
+}
 
 ## textarea where the return key submits the content
 returnTextAreaInput <- function(inputId, label = NULL, value = "") {
@@ -353,9 +359,9 @@ stat_tab_panel <- function(menu, tool, tool_ui, output_panels,
   )
 }
 
-################################################################
-## functions used for app help
-################################################################
+### ### ### ### ### ### ### ### ### ### ### ### ### #
+## Functions used for app help ----
+### ### ### ### ### ### ### ### ### ### ### ### ### #
 help_modal <- function(modal_title, link, help_file,
                        author = "Vincent Nijs",
                        year = lubridate::year(lubridate::now())) {
@@ -399,6 +405,10 @@ help_and_report <- function(modal_title, fun_name, help_file,
           fun_name, fun_name, fun_name, modal_title, help_file, author, year, fun_name, fun_name, fun_name) %>%
   enc2utf8 %>% HTML %>% withMathJax
 }
+
+### ### ### ### ### ### ### ### ### ### ### ### ### #
+## Unknown categorizations ----
+### ### ### ### ### ### ### ### ### ### ### ### ### #
 
 ## function to render .md files to html
 inclMD <- function(path) {
