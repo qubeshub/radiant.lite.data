@@ -113,6 +113,9 @@ knitr::opts_chunk$set(echo = FALSE, comment = NA, cache = FALSE,
   fig.path = normalizePath(tempdir(), winslash = "/"))
 
 ## Create UI ----
+
+## | serenity.nav_ui ----
+
 options(serenity.nav_ui =
   list(windowTitle = "Serenity",
        id = "nav_serenity",
@@ -125,6 +128,7 @@ options(serenity.nav_ui =
        )
   )
 
+## | serenity.shared ui ----
 options(serenity.shared_ui =
   tagList(
     navbarMenu("R",
