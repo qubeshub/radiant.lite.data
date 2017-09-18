@@ -1,6 +1,6 @@
-# CHANGES IN serenity.data 0.0.0.9000
+# CHANGES IN radiant.data 0.0.0.9000
 
-Rebranding to serenity
+Modified version for learning and testing.
 
 # CHANGES IN radiant.data 0.8.4
 

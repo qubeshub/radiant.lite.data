@@ -1,12 +1,12 @@
-#' Launch Serenity in the default browser
+#' Launch Radiant in the default browser
 #'
 #' @details See \url{https://radiant-rstats.github.io/docs} for documentation and tutorials
 #'
 #' @export
-serenity.data <- function() {
-  if (!"package:serenity.data" %in% search())
-    if (!require(serenity.data)) stop("Calling serenity.data start function but serenity.data is not installed.")
-  runApp(system.file("app", package = "serenity.data"), launch.browser = TRUE)
+radiant.data <- function() {
+  if (!"package:radiant.data" %in% search())
+    if (!require(radiant.data)) stop("Calling radiant.data start function but radiant.data is not installed.")
+  runApp(system.file("app", package = "radiant.data"), launch.browser = TRUE)
 }
 
 #' Install webshot and phantomjs
@@ -146,7 +146,7 @@ getdata <- function(dataset,
     } else if (exists("r_environment") && !is.null(r_environment$r_data[[dataset]])) {
       r_environment$r_data[[dataset]]
     } else if (exists("r_data") && !is.null(r_data[[dataset]])) {
-      if (isTRUE(getOption("serenity.local"))) message("Dataset ", dataset, " loaded from r_data list\n")
+      if (isTRUE(getOption("radiant.local"))) message("Dataset ", dataset, " loaded from r_data list\n")
       r_data[[dataset]]
     } else if (exists(dataset)) {
       d_env <- pryr::where(dataset)
@@ -190,7 +190,7 @@ factorizer <- function(dat, safx = 30) {
   mutate_at(dat, .cols = toFct, .funs = funs(as.factor))
 }
 
-#' Load an rda or rds file and add it to the serenity data list (r_data) if available
+#' Load an rda or rds file and add it to the radiant data list (r_data) if available
 #'
 #' @param fn File name and path as a string. Extension must be either rda or rds
 #' @param objname Name to use for the data frame. Defaults to the file name
@@ -233,7 +233,7 @@ loadr <- function(fn, objname = "") {
   }
 }
 
-#' Save data.frame as an rda or rds file from Serenity
+#' Save data.frame as an rda or rds file from Radiant
 #'
 #' @param objname Name of the data frame
 #' @param file File name and path as a string. Extension must be either rda or rds
@@ -386,7 +386,7 @@ changedata <- function(dataset,
     message("Dataset ", dataset, " changed in r_environment\n")
     r_environment$r_data[[dataset]][,var_names] <- vars
   } else if (exists("r_data") && !is.null(r_data[[dataset]])) {
-    if (isTRUE(getOption("serenity.local"))) message("Dataset ", dataset, " loaded from r_data list\n")
+    if (isTRUE(getOption("radiant.local"))) message("Dataset ", dataset, " loaded from r_data list\n")
     d_env <- pryr::where("r_data")
     d_env$r_data[[dataset]][,var_names] <- vars
   } else if (exists(dataset)) {
@@ -434,7 +434,7 @@ viewdata <- function(dataset,
 
   shinyApp(
     ui = fluidPage(title = title,
-      includeCSS(file.path(system.file(package = "serenity.data"),"app/www/style.css")),
+      includeCSS(file.path(system.file(package = "radiant.data"),"app/www/style.css")),
       fluidRow(DT::dataTableOutput("tbl")),
       actionButton("stop", "Stop", class = "btn-danger", onclick = "window.close();")
     ),
@@ -645,7 +645,7 @@ iterms <- function(vars, nway, sep = ":") {
 #'
 #' @examples
 #'
-#' copy_from(serenity.data, getdata)
+#' copy_from(radiant.data, getdata)
 #'
 #' @export
 copy_from <- function(.from, ...) {
@@ -679,7 +679,7 @@ copy_from <- function(.from, ...) {
 #' @param .from The package to pull the function from
 #'
 #' @examples
-#' copy_all(serenity.data)
+#' copy_all(radiant.data)
 #'
 #' @export
 copy_all <- function(.from) {
@@ -913,7 +913,7 @@ which.pmax <- function(...) as.integer(unname(unlist(apply(cbind(...), 1, which.
 #' @export
 which.pmin <- function(...) unname(apply(cbind(...), 1, which.min))
 
-#' Method to store variables in a dataset in Serenity
+#' Method to store variables in a dataset in Radiant
 #'
 #' @param object Object of relevant class that has required information to store
 #' @param ... Additional arguments

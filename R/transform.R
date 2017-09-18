@@ -406,7 +406,7 @@ weighted.sd <- function(x, wt, na.rm = TRUE) {
 
 #' Create data.frame summary
 #'
-#' @details Used in Serenity's Data > Transform tab
+#' @details Used in Radiant's Data > Transform tab
 #'
 #' @param dat Data.frame
 #' @param dc Class for each variable

@@ -1,9 +1,9 @@
-Package: serenity.data
-Title: Data Menu for Serenity: Data Science in the Classroom
+Package: radiant.data
+Title: Data Menu for Radiant
 Version: 0.0.0.9000
 Date: 2017-6-16
 Authors@R: c(person("M. Drew", "LaMar", email = "mdlama@wm.edu", role = c("aut", "cre")), person("Vincent", "Nijs", email = "radiant@rady.ucsd.edu", role = c("att")))
-Description: The Serenity Data menu includes interfaces for loading, saving,
+Description: The Radiant Data menu includes interfaces for loading, saving,
     viewing, visualizing, summarizing, transforming, and combining data. It also
     contains functionality to generate reproducible reports of the analyses
     conducted in the application.
@@ -41,8 +41,8 @@ Suggests:
     webshot (>= 0.4.0), 
     feather (>= 0.3.1),
     testthat (>= 1.0.0)
-URL: https://github.com/serenity-r/serenity.data
-BugReports: https://github.com/serenity-r/serenity/issues
+URL: https://github.com/radiant-r/radiant.data
+BugReports: https://github.com/radiant-r/radiant/issues
 License: AGPL-3 | file LICENSE
 LazyData: true
 RoxygenNote: 6.0.1

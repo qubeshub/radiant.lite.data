@@ -22,16 +22,16 @@ saveSession <- function(session = session) {
   )
 
   ## saving session information to file
-  fn <- paste0(normalizePath("~/serenity.sessions"),"/r_", r_ssuid, ".rds")
+  fn <- paste0(normalizePath("~/radiant.sessions"),"/r_", r_ssuid, ".rds")
   saveRDS(r_sessions[[r_ssuid]], file = fn)
 }
 
-observeEvent(input$refresh_serenity, {
-  if (isTRUE(getOption("serenity.local"))) {
-    fn <- normalizePath("~/serenity.sessions")
+observeEvent(input$refresh_radiant, {
+  if (isTRUE(getOption("radiant.local"))) {
+    fn <- normalizePath("~/radiant.sessions")
     file.remove(list.files(fn, full.names = TRUE))
   } else {
-    fn <- paste0(normalizePath("~/serenity.sessions"),"/r_", r_ssuid, ".rds")
+    fn <- paste0(normalizePath("~/radiant.sessions"),"/r_", r_ssuid, ".rds")
     if (file.exists(fn)) unlink(fn, force = TRUE)
   }
 
@@ -42,7 +42,7 @@ saveStateOnRefresh <- function(session = session) {
   session$onSessionEnded(function() {
     isolate({
       url_query <- parseQueryString(session$clientData$url_search)
-      if (not_pressed(input$refresh_serenity) && not_pressed(input$stop_serenity) &&
+      if (not_pressed(input$refresh_radiant) && not_pressed(input$stop_radiant) &&
           is.null(input$uploadState) && !"fixed" %in% names(url_query)) {
 
         # withProgress(message = "Preparing session sharing", value = 1, {
@@ -61,7 +61,7 @@ saveStateOnRefresh <- function(session = session) {
 }
 
 ### ### ### ### ### ### ### ### ### ### ### ###
-## Functions used across tools in serenity ----
+## Functions used across tools in radiant ----
 ### ### ### ### ### ### ### ### ### ### ### ###
 
 ## get active dataset and apply data-filter if available
@@ -250,7 +250,7 @@ print.capture_plot <- function(x, ...) {
 ### ### ### ### ### ### ### ### ### ### ### ### ### #
 
 ##
-serenityFileInput <- function(inputId, label, multiple = TRUE, accept = "csv") {
+radiantFileInput <- function(inputId, label, multiple = TRUE, accept = "csv") {
   isolate(
     if (accept == "csv") {}
   )

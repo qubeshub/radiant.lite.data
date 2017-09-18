@@ -17,7 +17,7 @@
 Summary method for the explore function
 }
 \details{
-See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Serenity
+See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Radiant
 }
 \examples{
 result <- explore("diamonds", "price:x")

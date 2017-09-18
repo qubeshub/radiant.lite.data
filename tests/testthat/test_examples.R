@@ -1,3 +1,3 @@
-# context("Serenity examples")
+# context("Radiant examples")
 
 # test_examples()

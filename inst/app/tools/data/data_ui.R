@@ -11,7 +11,7 @@ output$ui_filter_error <- renderUI({
 ## data ui and tabs
 output$ui_data <- renderUI({
   tagList(
-    includeCSS(file.path(getOption("serenity.path.data"),"app/www/style.css")),
+    includeCSS(file.path(getOption("radiant.path.data"),"app/www/style.css")),
     sidebarLayout(
       sidebarPanel(
         wellPanel(

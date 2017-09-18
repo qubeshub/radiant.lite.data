@@ -50,7 +50,7 @@ output$ui_pvt_nvar <- renderUI({
 })
 
 output$ui_pvt_fun <- renderUI({
-  r_funs <- getOption("serenity.functions")
+  r_funs <- getOption("radiant.functions")
   selectizeInput("pvt_fun", label = "Apply function:",
                  choices = r_funs,
                  selected = state_single("pvt_fun", r_funs, "mean_rm"),
@@ -115,7 +115,7 @@ output$ui_Pivotr <- renderUI({
     ),
     help_and_report(modal_title = "Pivotr",
                     fun_name = "pivotr",
-                    help_file = inclMD(file.path(getOption("serenity.path.data"),"app/tools/help/pivotr.md")))
+                    help_file = inclMD(file.path(getOption("radiant.path.data"),"app/tools/help/pivotr.md")))
   )
 })
 
@@ -139,7 +139,7 @@ pvt_inputs <- reactive({
 })
 
 pvt_sum_args <- as.list(if (exists("summary.pivotr")) formals(summary.pivotr)
-                        else formals(serenity.data:::summary.pivotr))
+                        else formals(radiant.data:::summary.pivotr))
 
 ## list of function inputs selected by user
 pvt_sum_inputs <- reactive({
@@ -150,7 +150,7 @@ pvt_sum_inputs <- reactive({
 })
 
 pvt_plot_args <- as.list(if (exists("plot.pivotr")) formals(plot.pivotr)
-                         else formals(serenity.data:::plot.pivotr))
+                         else formals(radiant.data:::plot.pivotr))
 
 ## list of function inputs selected by user
 pvt_plot_inputs <- reactive({

@@ -24,7 +24,7 @@
 Make a tabel of summary statistics in DT
 }
 \details{
-See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Serenity
+See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Radiant
 }
 \examples{
 tab <- explore("diamonds", "price:x") \%>\% dtab

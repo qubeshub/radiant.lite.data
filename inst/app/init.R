@@ -17,7 +17,7 @@
 #   {options(shiny.autoreload = ifelse (!is.null(.) && ., TRUE, FALSE))}
 
 remove_session_files <- function(st = Sys.time()) {
-  fl <- list.files(normalizePath("~/serenity.sessions/"), pattern = "*.rds",
+  fl <- list.files(normalizePath("~/radiant.sessions/"), pattern = "*.rds",
                    full.names = TRUE)
 
   for (f in fl) {
@@ -34,7 +34,7 @@ isolate({
 })
 
 most_recent_session_file <- function() {
-  fl <- list.files(normalizePath("~/serenity.sessions/"), pattern = "*.rds",
+  fl <- list.files(normalizePath("~/radiant.sessions/"), pattern = "*.rds",
                    full.names = TRUE)
 
   if (length(fl) > 0) {
@@ -48,7 +48,7 @@ most_recent_session_file <- function() {
 
 ## set the session id
 r_ssuid <-
-  if (getOption("serenity.local")) {
+  if (getOption("radiant.local")) {
     if (is.null(prevSSUID)) {
       mrsf <- most_recent_session_file()
       paste0("local-",shiny:::createUniqueId(3))
@@ -71,9 +71,9 @@ if (exists("r_data")) {
 } else if (!is.null(r_sessions[[r_ssuid]]$r_data)) {
   r_data  <- do.call(reactiveValues, r_sessions[[r_ssuid]]$r_data)
   r_state <- r_sessions[[r_ssuid]]$r_state
-} else if (file.exists(paste0("~/serenity.sessions/r_", r_ssuid, ".rds"))) {
+} else if (file.exists(paste0("~/radiant.sessions/r_", r_ssuid, ".rds"))) {
   ## read from file if not in global
-  fn <- paste0(normalizePath("~/serenity.sessions"),"/r_", r_ssuid, ".rds")
+  fn <- paste0(normalizePath("~/radiant.sessions"),"/r_", r_ssuid, ".rds")
 
   rs <- try(readRDS(fn), silent = TRUE)
   if (is(rs, 'try-error')) {
@@ -93,10 +93,10 @@ if (exists("r_data")) {
 
   unlink(fn, force = TRUE)
   rm(rs)
-} else if (isTRUE(getOption("serenity.local")) && file.exists(paste0("~/serenity.sessions/r_", mrsf, ".rds"))) {
+} else if (isTRUE(getOption("radiant.local")) && file.exists(paste0("~/radiant.sessions/r_", mrsf, ".rds"))) {
 
   ## restore from local folder but assign new ssuid
-  fn <- paste0(normalizePath("~/serenity.sessions"),"/r_", mrsf, ".rds")
+  fn <- paste0(normalizePath("~/radiant.sessions"),"/r_", mrsf, ".rds")
   rs <- try(readRDS(fn), silent = TRUE)
   if (is(rs, 'try-error')) {
     r_data  <- init_data()
@@ -107,7 +107,7 @@ if (exists("r_data")) {
   }
 
   ## don't navigate to same tab in case the app locks again
-  r_state$nav_serenity <- NULL
+  r_state$nav_radiant <- NULL
 
   unlink(fn, force = TRUE)
   rm(rs)
@@ -132,7 +132,7 @@ observeEvent(session$clientData$url_search, {
   ## create an observer and suspend when done
   url_observe <- observe({
     if (is.null(input$dataset)) return()
-    url <- getOption("serenity.url.patterns")[[r_data$url]]
+    url <- getOption("radiant.url.patterns")[[r_data$url]]
     if (is.null(url)) {
       ## if pattern not found suspend observer
       url_observe$suspend()
@@ -149,31 +149,31 @@ observeEvent(session$clientData$url_search, {
 })
 
 ## keeping track of the main tab we are on
-observeEvent(input$nav_serenity, {
-  if (!input$nav_serenity %in% c("Refresh", "Stop"))
-    r_data$nav_serenity <- input$nav_serenity
+observeEvent(input$nav_radiant, {
+  if (!input$nav_radiant %in% c("Refresh", "Stop"))
+    r_data$nav_radiant <- input$nav_radiant
 })
 
 ## Jump to the page you were on
 ## only goes two layers deep at this point
-if (!is.null(r_state$nav_serenity)) {
+if (!is.null(r_state$nav_radiant)) {
 
   ## don't return-to-the-spot if that was quit or stop
-  if (r_state$nav_serenity %in% c("Refresh","Stop")) return()
+  if (r_state$nav_radiant %in% c("Refresh","Stop")) return()
 
   ## naming the observer so we can suspend it when done
   nav_observe <- observe({
     ## needed to avoid errors when no data is available yet
     if (is.null(input$dataset)) return()
-    updateTabsetPanel(session, "nav_serenity", selected = r_state$nav_serenity)
+    updateTabsetPanel(session, "nav_radiant", selected = r_state$nav_radiant)
 
     ## check if shiny set the main tab to the desired value
-    if (is.null(input$nav_serenity)) return()
-    if (input$nav_serenity != r_state$nav_serenity) return()
-    nav_serenity_tab <- getOption("serenity.url.list")[[r_state$nav_serenity]] %>% names
+    if (is.null(input$nav_radiant)) return()
+    if (input$nav_radiant != r_state$nav_radiant) return()
+    nav_radiant_tab <- getOption("radiant.url.list")[[r_state$nav_radiant]] %>% names
 
-    if (!is.null(nav_serenity_tab) && !is.null(r_state[[nav_serenity_tab]]))
-      updateTabsetPanel(session, nav_serenity_tab, selected = r_state[[nav_serenity_tab]])
+    if (!is.null(nav_radiant_tab) && !is.null(r_state[[nav_radiant_tab]]))
+      updateTabsetPanel(session, nav_radiant_tab, selected = r_state[[nav_radiant_tab]])
 
     ## once you arrive at the desired tab suspend the observer
     nav_observe$suspend()
@@ -185,12 +185,12 @@ isolate({
   if (is.null(r_data$plot_width)) r_data$plot_width <- 600
 })
 
-## 'sourcing' serenity's package functions in the server.R environment
-if (!"package:serenity.data" %in% search() && getOption("serenity.path.data") == "..") {
+## 'sourcing' radiant's package functions in the server.R environment
+if (!"package:radiant.data" %in% search() && getOption("radiant.path.data") == "..") {
   ## for shiny-server and development
   for (file in list.files("../../R", pattern="\\.(r|R)$", full.names = TRUE))
-    source(file, encoding = getOption("serenity.encoding"), local = TRUE)
+    source(file, encoding = getOption("radiant.encoding"), local = TRUE)
 } else {
   ## for use with launcher
-  serenity.data::copy_all(serenity.data)
+  radiant.data::copy_all(radiant.data)
 }

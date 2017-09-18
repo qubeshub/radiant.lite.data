@@ -29,8 +29,8 @@ output$ui_View <- renderUI({
         tags$td(actionButton("view_store", "Store"), style="padding-top:30px;")
       )
     ),
-    # help_modal('View','view_help',inclMD(file.path(getOption("serenity.path.data"),"app/tools/help/view.md")) %>% gsub("`","",.))
-    help_and_report('View','view',inclMD(file.path(getOption("serenity.path.data"),"app/tools/help/view.md")) %>% gsub("`","",.))
+    # help_modal('View','view_help',inclMD(file.path(getOption("radiant.path.data"),"app/tools/help/view.md")) %>% gsub("`","",.))
+    help_and_report('View','view',inclMD(file.path(getOption("radiant.path.data"),"app/tools/help/view.md")) %>% gsub("`","",.))
   )
 })
 

@@ -18,7 +18,7 @@ expl_inputs <- reactive({
 })
 
 expl_sum_args <- as.list(if (exists("summary.explore")) formals(summary.explore)
-                         else formals(serenity.data:::summary.explore))
+                         else formals(radiant.data:::summary.explore))
 
 ## list of function inputs selected by user
 expl_sum_inputs <- reactive({
@@ -71,7 +71,7 @@ output$ui_expl_byvar <- renderUI({
 })
 
 output$ui_expl_fun <- renderUI({
-  r_funs <- getOption("serenity.functions")
+  r_funs <- getOption("radiant.functions")
   isolate({
     sel <- if (is_empty(input$expl_fun))  state_multiple("expl_fun", r_funs, default_funs)
            else input$expl_fun
@@ -110,7 +110,7 @@ output$ui_Explore <- renderUI({
       )
     ),
     help_and_report(modal_title = "Explore",fun_name = "explore",
-                    help_file = inclMD(file.path(getOption("serenity.path.data"),"app/tools/help/explore.md")))
+                    help_file = inclMD(file.path(getOption("radiant.path.data"),"app/tools/help/explore.md")))
   )
 })
 

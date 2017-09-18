@@ -1,4 +1,4 @@
-Name: Serenity - Data
-Description: Start Serenity - Data
-Binding: serenity.data
+Name: Radiant - Data
+Description: Start Radiant - Data
+Binding: radiant.data
 Interactive: true

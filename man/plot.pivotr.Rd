@@ -24,7 +24,7 @@
 Plot method for the pivotr function
 }
 \details{
-See \url{https://radiant-rstats.github.io/docs/data/pivotr} for an example in Serenity
+See \url{https://radiant-rstats.github.io/docs/data/pivotr} for an example in Radiant
 }
 \examples{
 pivotr("diamonds", cvars = "cut") \%>\% plot

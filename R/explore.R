@@ -1,8 +1,8 @@
 #' Explore data
 #'
-#' @details See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Serenity
+#' @details See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Radiant
 #'
-#' @param dataset Dataset name (string). This can be a dataframe in the global environment or an element in an r_data list from Serenity
+#' @param dataset Dataset name (string). This can be a dataframe in the global environment or an element in an r_data list from Radiant
 #' @param vars (Numerical) variables to summaries
 #' @param byvar Variable(s) to group data by before summarizing
 #' @param fun Functions to use for summarizing
@@ -10,7 +10,7 @@
 #' @param tabfilt Expression used to filter the table. This should be a string (e.g., "Total > 10000")
 #' @param tabsort Expression used to sort the table (e.g., "-Total")
 #' @param nr Number of rows to display
-#' @param data_filter Expression entered in, e.g., Data > View to filter the dataset in Serenity. The expression should be a string (e.g., "price > 10000")
+#' @param data_filter Expression entered in, e.g., Data > View to filter the dataset in Radiant. The expression should be a string (e.g., "price > 10000")
 #' @param shiny Logical (TRUE, FALSE) to indicate if the function call originate inside a shiny app
 #'
 #' @return A list of all variables defined in the function as an object of class explore
@@ -170,7 +170,7 @@ explore <- function(dataset,
 
 #' Summary method for the explore function
 #'
-#' @details See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Serenity
+#' @details See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Radiant
 #'
 #' @param object Return value from \code{\link{explore}}
 #' @param dec Number of decimals to show
@@ -212,7 +212,7 @@ summary.explore <- function(object, dec = 3, ...) {
 
 #' Store method for the explore function
 #'
-#' @details Add the summarized data to the r_data list in Serenity or return it. See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Serenity
+#' @details Add the summarized data to the r_data list in Radiant or return it. See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Radiant
 #'
 #' @param object Return value from \code{\link{explore}}
 #' @param name Name to assign to the dataset
@@ -243,7 +243,7 @@ store.explore <- function(object, name, ...) {
 
 #' Flip the DT table to put Function, Variable, or Group by on top
 #'
-#' @details See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Serenity
+#' @details See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Radiant
 #'
 #' @param expl Return value from \code{\link{explore}}
 #' @param top The variable (type) to display at the top of the table ("fun" for Function, "var" for Variable, and "byvar" for Group by. "fun" is the default
@@ -274,7 +274,7 @@ flip <- function(expl, top = "fun") {
 
 #' Make a tabel of summary statistics in DT
 #'
-#' @details See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Serenity
+#' @details See \url{https://radiant-rstats.github.io/docs/data/explore.html} for an example in Radiant
 #'
 #' @param object Return value from \code{\link{explore}}
 #' @param dec Number of decimals to show
@@ -669,7 +669,7 @@ does_vary <- function(x, na.rm = TRUE) {
 #' @export
 make_funs <- function(x) {
   xclean <- gsub("_rm$","",x) %>% sub("length","n",.)
-  env <- if (exists("serenity.data")) environment(serenity.data::serenity.data) else parent.frame()
+  env <- if (exists("radiant.data")) environment(radiant.data::radiant.data) else parent.frame()
   dplyr::funs_(lapply(paste0(xclean, " = ~", x), as.formula, env = env) %>% setNames(xclean))
 }
 

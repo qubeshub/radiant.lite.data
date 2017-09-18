@@ -268,7 +268,7 @@ output$ui_Transform <- renderUI({
 	  )),
     help_and_report(modal_title = "Transform",
                     fun_name = "transform",
-                    help_file = inclMD(file.path(getOption("serenity.path.data"), "app/tools/help/transform.md")))
+                    help_file = inclMD(file.path(getOption("radiant.path.data"), "app/tools/help/transform.md")))
 	)
 })
 
@@ -534,7 +534,7 @@ observeEvent(input$tr_change_type, {
 
   if (!store && !is.character(dataset)) {
     if (is.na(bins) || !is.integer(bins)) return("Please specify the (integer) number of bins to use")
-    xt <- function(x, bins, rev) serenity.data::xtile(x, bins, rev = rev)
+    xt <- function(x, bins, rev) radiant.data::xtile(x, bins, rev = rev)
     select_(dataset, .dots = vars) %>%
     mutate_all(funs(xt(., bins, rev = rev))) %>%
     set_colnames(paste0(vars, .ext))
@@ -786,9 +786,9 @@ transform_main <- reactive({
       } else {
         cpdat <- try(read.table(header = TRUE, comment.char = "", fill = TRUE, sep = "\t", as.is = TRUE, text = input$tr_paste), silent = TRUE)
         if (is(cpdat, 'try-error')) {
-          return("The pasted data was not well formated. Please make sure the number of rows **\n** in the data in Serenity and in the spreadsheet are the same and try again.")
+          return("The pasted data was not well formated. Please make sure the number of rows **\n** in the data in Radiant and in the spreadsheet are the same and try again.")
         } else if (nrow(cpdat) != nrow(dat)) {
-          return("The pasted data does not have the correct number of rows. Please make sure **\n** the number of rows in the data in Serenity and in the spreadsheet are the **\n** same and try again.")
+          return("The pasted data does not have the correct number of rows. Please make sure **\n** the number of rows in the data in Radiant and in the spreadsheet are the **\n** same and try again.")
         } else {
           return(as.data.frame(cpdat, check.names = FALSE) %>% factorizer)
           # return(cpdat)

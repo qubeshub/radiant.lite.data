@@ -74,7 +74,7 @@ output$ui_Combine <- renderUI({
     ),
     help_and_report(modal_title = "Combine",
                     fun_name = "combine",
-                    help_file = inclMD(file.path(getOption("serenity.path.data"), "app/tools/help/combine.md")))
+                    help_file = inclMD(file.path(getOption("radiant.path.data"), "app/tools/help/combine.md")))
   )
 })
 

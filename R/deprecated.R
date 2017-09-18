@@ -1,9 +1,9 @@
-#' Deprecated function(s) in the serenity.data package
+#' Deprecated function(s) in the radiant.data package
 #'
 #' These functions are provided for compatibility with previous versions of
-#' serenity. They will eventually be  removed.
-#' @rdname serenity.data-deprecated
-#' @name serenity.data-deprecated
+#' radiant. They will eventually be  removed.
+#' @rdname radiant.data-deprecated
+#' @name radiant.data-deprecated
 #' @param ... Parameters to be passed to the updated functions
 #' @docType package
 #' @export  dfprint nrprint mutate_each
@@ -20,7 +20,7 @@
 mutate_each <- function(...) {
   nm <- pryr::named_dots(...)
   if (".ext" %in% names(nm)) {
-    .Deprecated("mutate_ext", package = "serenity.data")
+    .Deprecated("mutate_ext", package = "radiant.data")
     mutate_ext(...)
   } else {
     .Deprecated("mutate_at", package = "dplyr")
@@ -29,19 +29,19 @@ mutate_each <- function(...) {
   }
 }
 dfprint <- function(...) {
-  .Deprecated("formatdf", package = "serenity.data")
+  .Deprecated("formatdf", package = "radiant.data")
   formatdf(...)
 }
 nrprint <- function(...) {
-  .Deprecated("formatnr", package = "serenity.data")
+  .Deprecated("formatnr", package = "radiant.data")
   formatnr(...)
 }
 varp_rm <- function(...) {
-  .Deprecated("varpop", package = "serenity.data")
+  .Deprecated("varpop", package = "radiant.data")
   varpop(...)
 }
 sdp_rm <- function(...) {
-  .Deprecated("sdpop", package = "serenity.data")
+  .Deprecated("sdpop", package = "radiant.data")
   sdpop(...)
 }
 NULL

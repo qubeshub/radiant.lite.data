@@ -15,5 +15,5 @@ getsummary(dat, dc = getclass(dat))
 Create data.frame summary
 }
 \details{
-Used in Serenity's Data > Transform tab
+Used in Radiant's Data > Transform tab
 }

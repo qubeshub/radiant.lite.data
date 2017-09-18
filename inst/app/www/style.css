@@ -109,7 +109,7 @@ pre, code, pre code {
   margin-bottom: 5px;
 }
 
-/* BEGIN: Serenity colors */
+/* BEGIN: Radiant colors */
 .navbar-inverse {
   background-color: #628a2c;
 }
@@ -124,7 +124,7 @@ pre, code, pre code {
     color: white;
 }
 
-/* END: Serenity colors */
+/* END: Radiant colors */
 
 .navbar .nav > li > a {
   padding-left: 7px;
