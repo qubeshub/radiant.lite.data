@@ -305,7 +305,7 @@ output$saveReport <- downloadHandler(
         owd <- setwd(tempdir())
         on.exit(setwd(owd))
 
-        lib <- if ("radiant" %in% installed.packages()) "radiant" else "radiant.data"
+        lib <- if ("radiant.lite" %in% installed.packages()) "radiant.lite" else "radiant.lite.data"
 
         report <-
           ifelse (is_empty(input$rmd_selection), input$rmd_report, input$rmd_selection) %>%
@@ -372,7 +372,7 @@ if (!exists(\"r_environment\")) library(", lib, ")
                 Notebook = rmarkdown::html_notebook(highlight = "textmate", theme = "spacelab", code_folding = "hide"),
                 HTML = rmarkdown::html_document(highlight = "textmate", theme = "spacelab", code_download = TRUE, df_print = "paged"),
                 PDF = rmarkdown::pdf_document(),
-                Word = rmarkdown::word_document(reference_docx = file.path(system.file(package = "radiant.data"),"app/www/style.docx"))
+                Word = rmarkdown::word_document(reference_docx = file.path(system.file(package = "radiant.lite.data"),"app/www/style.docx"))
               ), envir = r_environment)
               file.rename(out, file)
             } else {

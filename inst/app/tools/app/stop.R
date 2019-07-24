@@ -21,7 +21,7 @@ stop_radiant <- function(rmd = FALSE) {
       assign("r_data", toList(r_data), envir = .GlobalEnv)
 
       stop_message <- "\nStopped Radiant. State available as r_state and r_data.\n"
-      lib <- if ("radiant" %in% installed.packages()) "radiant" else "radiant.data"
+      lib <- if ("radiant.lite" %in% installed.packages()) "radiant.lite" else "radiant.lite.data"
 
       if (!is_empty(input$rmd_report)) {
         rmd_report <-

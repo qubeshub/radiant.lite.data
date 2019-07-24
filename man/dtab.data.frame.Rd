@@ -5,8 +5,8 @@
 \title{Create a DT table with bootstrap theme}
 \usage{
 \method{dtab}{data.frame}(object, vars = "", filt = "", rows = NULL,
-  na.rm = FALSE, dec = 3, filter = "top", pageLength = 10, dom = "",
-  style = "bootstrap", rownames = FALSE, ...)
+  na.rm = FALSE, dec = 3, filter = "top", pageLength = 10,
+  dom = "", style = "bootstrap", rownames = FALSE, ...)
 }
 \arguments{
 \item{object}{Data.frame to display}

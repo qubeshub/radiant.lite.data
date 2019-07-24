@@ -28,10 +28,10 @@ rem_old <- function(app) {
 	unlink(paste0(dirwin, "/", app, "*"))
 }
 
-sapply("radiant.data", rem_old)
+sapply("radiant.lite.data", rem_old)
 
 ## avoid 'loaded namespace' stuff when building for mac
-system(paste0(Sys.which("R"), " -e \"source('~/gh/radiant.data/build/build_mac.R')\""))
+system(paste0(Sys.which("R"), " -e \"source('~/gh/radiant.lite.data/build/build_mac.R')\""))
 
 win <- readline(prompt = "Did you build on Windows? y/n: ")
 if (grepl("[yY]", win)) {

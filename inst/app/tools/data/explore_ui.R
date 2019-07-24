@@ -18,7 +18,7 @@ expl_inputs <- reactive({
 })
 
 expl_sum_args <- as.list(if (exists("summary.explore")) formals(summary.explore)
-                         else formals(radiant.data:::summary.explore))
+                         else formals(radiant.lite.data:::summary.explore))
 
 ## list of function inputs selected by user
 expl_sum_inputs <- reactive({

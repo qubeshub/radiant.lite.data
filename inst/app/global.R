@@ -36,9 +36,9 @@ import_fs <- function(ns, libs = c(), incl = c(), excl = c()) {
 }
 
 ## import required functions and packages
-import_fs("radiant.data", libs = "plotly", incl = "ggplotly")
-if (!"package:radiant.data" %in% search())
-  import_fs("radiant.data", libs = c("magrittr","ggplot2","lubridate","tidyr","dplyr","broom","tibble"))
+import_fs("radiant.lite.data", libs = "plotly", incl = "ggplotly")
+if (!"package:radiant.lite.data" %in% search())
+  import_fs("radiant.lite.data", libs = c("magrittr","ggplot2","lubridate","tidyr","dplyr","broom","tibble"))
 
 # Initialize reactive data ----
 
@@ -55,7 +55,7 @@ init_data <- function() {
     df <- load(df_name) %>% get
     df_name <- basename(df_name) %>% {gsub(paste0(".",tools::file_ext(.)),"",., fixed = TRUE)}
   } else {
-    df <- data(list = df_name, package = "radiant.data", envir = environment()) %>% get
+    df <- data(list = df_name, package = "radiant.lite.data", envir = environment()) %>% get
   }
 
   r_data[[df_name]] <- df
@@ -81,9 +81,9 @@ if (Sys.getenv('SHINY_PORT') == "") {
 }
 
 ## Path to use for local or server use
-ifelse (grepl("radiant.data", getwd()) && file.exists("../../inst") ,
+ifelse (grepl("radiant.lite.data", getwd()) && file.exists("../../inst") ,
         "..",
-        system.file(package = "radiant.data")) %>%
+        system.file(package = "radiant.lite.data")) %>%
   options(radiant.path.data = .)
 
 # Encoding ----
@@ -117,7 +117,7 @@ knitr::opts_chunk$set(echo = FALSE, comment = NA, cache = FALSE,
 ## | radiant.nav_ui ----
 
 options(radiant.nav_ui =
-  list(windowTitle = "Radiant",
+  list(windowTitle = "Radiant Lite",
        id = "nav_radiant",
        inverse = TRUE,
        collapsible = TRUE,
@@ -275,8 +275,8 @@ make_url_patterns <- function(url_list = getOption("radiant.url.list"),
 options(radiant.url.patterns = make_url_patterns())
 
 ## Installed packages versions ----
-tmp <- grep("radiant.", installed.packages()[,"Package"], value = TRUE)
-if ("radiant" %in% installed.packages()) tmp <- c("radiant" = "radiant", tmp)
+tmp <- grep("radiant.lite.", installed.packages()[,"Package"], value = TRUE)
+if ("radiant.lite" %in% installed.packages()) tmp <- c("radiant.lite" = "radiant.lite", tmp)
 
 radiant.versions <- "Unknown"
 if (length(tmp) > 0)

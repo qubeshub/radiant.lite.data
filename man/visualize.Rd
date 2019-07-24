@@ -6,10 +6,10 @@
 \usage{
 visualize(dataset, xvar, yvar = "", comby = FALSE, combx = FALSE,
   type = "dist", facet_row = ".", facet_col = ".", color = "none",
-  fill = "none", size = "none", fillcol = "blue", linecol = "black",
-  pointcol = linecol[1], bins = 10, smooth = 1, fun = "mean",
-  check = "", axes = "", alpha = 0.5, ylim = "none", data_filter = "",
-  shiny = FALSE, custom = FALSE)
+  fill = "none", size = "none", fillcol = "blue",
+  linecol = "black", pointcol = linecol[1], bins = 10, smooth = 1,
+  fun = "mean", check = "", axes = "", alpha = 0.5,
+  ylim = "none", data_filter = "", shiny = FALSE, custom = FALSE)
 }
 \arguments{
 \item{dataset}{Dataset name (string). This can be a dataframe in the global environment or an element in an r_data list from Radiant}

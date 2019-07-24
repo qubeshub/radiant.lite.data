@@ -4,8 +4,8 @@
 \alias{combinedata}
 \title{Combine datasets using dplyr's bind and join functions}
 \usage{
-combinedata(dataset, cmb_dataset, by = "", add = "", type = "inner_join",
-  name = "", data_filter = "")
+combinedata(dataset, cmb_dataset, by = "", add = "",
+  type = "inner_join", name = "", data_filter = "")
 }
 \arguments{
 \item{dataset}{Dataset name (string). This can be a dataframe in the global environment or an element in an r_data list from Radiant}

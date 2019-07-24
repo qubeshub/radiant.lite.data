@@ -534,7 +534,7 @@ observeEvent(input$tr_change_type, {
 
   if (!store && !is.character(dataset)) {
     if (is.na(bins) || !is.integer(bins)) return("Please specify the (integer) number of bins to use")
-    xt <- function(x, bins, rev) radiant.data::xtile(x, bins, rev = rev)
+    xt <- function(x, bins, rev) radiant.lite.data::xtile(x, bins, rev = rev)
     select_(dataset, .dots = vars) %>%
     mutate_all(funs(xt(., bins, rev = rev))) %>%
     set_colnames(paste0(vars, .ext))

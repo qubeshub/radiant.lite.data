@@ -1,9 +1,9 @@
 ## build for windows
-# devtools::install("../radiant.data")
-# devtools::build("../radiant.data", binary = TRUE)
+# devtools::install("../radiant.lite.data")
+# devtools::build("../radiant.lite.data", binary = TRUE)
 
 ## build for windows
-app <- "radiant.data"
+app <- "radiant.lite.data"
 path <- "../"
 devtools::install(file.path(path, app))
 f <- devtools::build(file.path(path, app))

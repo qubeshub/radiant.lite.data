@@ -54,7 +54,7 @@ test_that("is_empty", {
 test_that("options", {
   options("width" = 10)
   options("scipen" = 0)
-  radiant.data:::.onLoad("","")
+  radiant.lite.data:::.onLoad("","")
   expect_equal(options()$width, 200)
   expect_equal(options()$scipen, 100)
 })

@@ -4,9 +4,9 @@
 #'
 #' @export
 radiant.data <- function() {
-  if (!"package:radiant.data" %in% search())
-    if (!require(radiant.data)) stop("Calling radiant.data start function but radiant.data is not installed.")
-  runApp(system.file("app", package = "radiant.data"), launch.browser = TRUE)
+  if (!"package:radiant.lite.data" %in% search())
+    if (!require(radiant.lite.data)) stop("Calling radiant.lite.data start function but radiant.lite.data is not installed.")
+  runApp(system.file("app", package = "radiant.lite.data"), launch.browser = TRUE)
 }
 
 #' Install webshot and phantomjs
@@ -434,7 +434,7 @@ viewdata <- function(dataset,
 
   shinyApp(
     ui = fluidPage(title = title,
-      includeCSS(file.path(system.file(package = "radiant.data"),"app/www/style.css")),
+      includeCSS(file.path(system.file(package = "radiant.lite.data"),"app/www/style.css")),
       fluidRow(DT::dataTableOutput("tbl")),
       actionButton("stop", "Stop", class = "btn-danger", onclick = "window.close();")
     ),
@@ -645,7 +645,7 @@ iterms <- function(vars, nway, sep = ":") {
 #'
 #' @examples
 #'
-#' copy_from(radiant.data, getdata)
+#' copy_from(radiant.lite.data, getdata)
 #'
 #' @export
 copy_from <- function(.from, ...) {
@@ -679,7 +679,7 @@ copy_from <- function(.from, ...) {
 #' @param .from The package to pull the function from
 #'
 #' @examples
-#' copy_all(radiant.data)
+#' copy_all(radiant.lite.data)
 #'
 #' @export
 copy_all <- function(.from) {

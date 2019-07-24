@@ -186,11 +186,11 @@ isolate({
 })
 
 ## 'sourcing' radiant's package functions in the server.R environment
-if (!"package:radiant.data" %in% search() && getOption("radiant.path.data") == "..") {
+if (!"package:radiant.lite.data" %in% search() && getOption("radiant.path.data") == "..") {
   ## for shiny-server and development
   for (file in list.files("../../R", pattern="\\.(r|R)$", full.names = TRUE))
     source(file, encoding = getOption("radiant.encoding"), local = TRUE)
 } else {
   ## for use with launcher
-  radiant.data::copy_all(radiant.data)
+  radiant.lite.data::copy_all(radiant.lite.data)
 }

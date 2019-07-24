@@ -30,11 +30,11 @@ dat %>% select(price, log_price) %>% head
 ## create a histogram of prices
 dat %>% ggplot(aes(x = price)) + geom_histogram()
 
-## and a histogram of log-prices using radiant.data::visualize
+## and a histogram of log-prices using radiant.lite.data::visualize
 dat %>% visualize(xvar = \"log_price\", custom = TRUE)
 
 ## open help in the R-studio viewer from Radiant
-help(package = 'radiant.data')
+help(package = 'radiant.lite.data')
 
 ## If you are familiar with Shiny you can call reactives when the code
 ## is evaluated inside a Shiny app. For example, if you transformed
@@ -129,7 +129,7 @@ output$saveCodeReport <- downloadHandler(
         owd <- setwd(tempdir())
         on.exit(setwd(owd))
 
-        lib <- if ("radiant" %in% installed.packages()) "radiant" else "radiant.data"
+        lib <- if ("radiant.lite" %in% installed.packages()) "radiant.lite" else "radiant.lite.data"
 
         rcode <- ifelse (is_empty(input$rcode_selection), input$rcode_edit, input$rcode_selection)
 

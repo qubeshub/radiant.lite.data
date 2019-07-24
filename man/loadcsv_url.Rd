@@ -4,8 +4,8 @@
 \alias{loadcsv_url}
 \title{Load a csv file with from a url}
 \usage{
-loadcsv_url(csv_url, header = TRUE, sep = ",", dec = ".", n_max = Inf,
-  saf = TRUE, safx = 20)
+loadcsv_url(csv_url, header = TRUE, sep = ",", dec = ".",
+  n_max = Inf, saf = TRUE, safx = 20)
 }
 \arguments{
 \item{csv_url}{URL for the csv file}

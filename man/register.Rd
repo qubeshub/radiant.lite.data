@@ -4,7 +4,8 @@
 \alias{register}
 \title{Register a data.frame in the datasetlist in Radiant}
 \usage{
-register(new = "", org = "", descr = "", envir = parent.frame(), ...)
+register(new = "", org = "", descr = "", envir = parent.frame(),
+  ...)
 }
 \arguments{
 \item{new}{Name of the new dataset}

@@ -139,7 +139,7 @@ pvt_inputs <- reactive({
 })
 
 pvt_sum_args <- as.list(if (exists("summary.pivotr")) formals(summary.pivotr)
-                        else formals(radiant.data:::summary.pivotr))
+                        else formals(radiant.lite.data:::summary.pivotr))
 
 ## list of function inputs selected by user
 pvt_sum_inputs <- reactive({
@@ -150,7 +150,7 @@ pvt_sum_inputs <- reactive({
 })
 
 pvt_plot_args <- as.list(if (exists("plot.pivotr")) formals(plot.pivotr)
-                         else formals(radiant.data:::plot.pivotr))
+                         else formals(radiant.lite.data:::plot.pivotr))
 
 ## list of function inputs selected by user
 pvt_plot_inputs <- reactive({

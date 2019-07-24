@@ -5,7 +5,7 @@ shinyServer(function(input, output, session) {
 	source("radiant.R", encoding = getOption("radiant.encoding"), local = TRUE)
 
   ## packages to use for example data
-  options(radiant.example.data = "radiant.data")
+  options(radiant.example.data = "radiant.lite.data")
 
 	## source data & analysis tools from files in tools/app and tools/data directories
   for (file in list.files(c("tools/app","tools/data"), pattern="\\.(r|R)$", full.names = TRUE))
